@@ -1,0 +1,88 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{% static '/CSS/Admin-Bus.css' %}">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
+    <!-----Material icons------>
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons+Outlined" rel="stylesheet">
+    <title>Bus Management</title>
+</head>
+<body>
+
+  <div class="grid-container">
+    <header class="header">
+        <div class="menu-icon" onclick="openSidebar()">
+            <span class="material-icons-outlined">menu</span>
+        </div>
+        <div class="header-left">
+            <span class="material-icons-outlined">search</span>
+        </div>
+        <div class="header-right">
+            <span class="material-icons-outlined">account_circle</span>
+        </div>
+    </header>
+    <aside id="sidebar">
+        <div class="sidebar-title">
+            <div class="sidebar-brand">
+                <span class="material-icons-outlined">shopping_cart</span> METROMANAGE
+            </div>
+            <span class="material-icons-outlined" onclick="closeSidebar()">close</span>
+        </div>
+
+        <ul class="sidebar-list">
+            <li class="sidebar-list-item">
+                <span class="material-icons-outlined">dashboard</span> <a href="/">Dashboard</a>
+            </li>
+            <li class="sidebar-list-item">
+                <span class="material-icons-outlined">directions_bus</span><a href="/admin/bus">Bus Management</a>
+            </li>
+            <li class="sidebar-list-item">
+                <span class="material-icons-outlined">route</span> <a href="/admin/routes"> Route Management</a>
+            </li>
+            <li class="sidebar-list-item">
+                <span class="material-icons-outlined">people</span> <a href="/admin/drivers">Driver Management</a> 
+            </li>
+            <li class="sidebar-list-item">
+                <span class="material-icons-outlined">paid</span> Payments
+            </li>
+            <li class="sidebar-list-item">
+                <span class="material-icons-outlined">summarize</span> Reports
+            </li>
+            
+        </ul>
+
+      </aside>
+      <main class="main-container">
+          <div class="main-title">
+              <h2>BUS MANAGEMENT</h2>
+          </div>
+    <div class="module" id="bus-management">
+        <form id="bus-form">
+          <input type="text" id="bus-reg" placeholder="Bus Registration" required />
+          <select id="bus-status">
+            <option value="in-transit">In Transit</option>
+            <option value="under-maintenance">Under Maintenance</option>
+            <option value="parked">Parked</option>
+            <option value="awaiting">Awaiting</option>
+          </select>
+          <button type="submit">Add/Update Bus</button>
+        </form>
+        <input type="text" id="search-bus" placeholder="Search Bus..." />
+        <table id="bus-list">
+          <thead>
+            <tr>
+              <th>Registration</th>
+              <th>Status</th>
+              <th>Actions</th>
+            </tr>
+          </thead>
+          <tbody></tbody>
+        </table>
+      </div>
+      
+      <script src="{% static '/Js/Amin-Bus.js' %}"></script>
+</body>
+</html>

@@ -1,0 +1,104 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-----Montserat Font------>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
+    <!-----Material icons------>
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons+Outlined" rel="stylesheet">
+    <link rel="stylesheet" href="{% static '/CSS/User-Payment.css' %}">
+    <title>User Payments Management</title>
+</head>
+<body>
+    <div class="grid-container">
+        <header class="header">
+            <div class="menu-icon" onclick="openSidebar()">
+                <span class="material-icons-outlined">menu</span>
+            </div>
+            <div class="header-left">
+                <span class="material-icons-outlined">search</span>
+            </div>
+            <div class="header-right">
+                <span class="material-icons-outlined">account_circle</span>
+            </div>
+        </header>
+        <aside id="sidebar">
+            <div class="sidebar-title">
+                <div class="sidebar-brand">
+                    <span class="material-icons-outlined">shopping_cart</span> METROMANAGE
+                </div>
+                <span class="material-icons-outlined" onclick="closeSidebar()">close</span>
+            </div>
+
+            <ul class="sidebar-list">
+                <li class="sidebar-list-item">
+                    <span class="material-icons-outlined">dashboard</span> Dashboard
+                </li>
+                <li class="sidebar-list-item">
+                    <span class="material-icons-outlined">directions_bus</span><a href="/admin/bus">Bus Management</a>
+                </li>
+                <li class="sidebar-list-item">
+                    <span class="material-icons-outlined">route</span> <a href="/admin/routes"> Route Management</a>
+                </li>
+                <li class="sidebar-list-item">
+                    <span class="material-icons-outlined">people</span> Driver Management
+                </li>
+                <li class="sidebar-list-item">
+                    <span class="material-icons-outlined">paid</span> Payments
+                </li>
+                <li class="sidebar-list-item">
+                    <span class="material-icons-outlined">summarize</span> Reports
+                </li>
+                
+            </ul>
+
+        </aside>
+        <main class="main-container">
+            <div class="main-title">
+                <h2>PAYMENT MANAGEMENT</h2>
+            </div>
+
+              <div class="payment-management-container">
+
+                <!-- Payment Table -->
+                <table id="payment-table">
+                  <thead>
+                    <tr>
+                      <th>Payment ID</th>
+                      <th>Fee Type</th>
+                      <th>Amount</th>
+                      <th>Status</th>
+                      <th>Action</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <!-- Dynamic Data Rows -->
+                  </tbody>
+                </table>
+            
+                <!-- Payment Form -->
+                <div class="payment-form-container">
+                  <h2>Make a Payment</h2>
+                  <form id="payment-form">
+                    <label for="fee-type">Fee Type:</label>
+                    <select id="fee-type">
+                      <option value="sacco">SACCO Fee</option>
+                      <option value="stage">Stage Fee</option>
+                    </select>
+            
+                    <label for="amount">Amount:</label>
+                    <input type="number" id="amount" placeholder="Enter amount" required>
+            
+                    <button type="button" id="pay-btn" class="btn">Pay Now</button>
+                  </form>
+                </div>
+              </div>
+            
+              <script src="{% static '/Js/User-Payment.js' %}"></script>
+            
+            
+
+</body>
+</html>

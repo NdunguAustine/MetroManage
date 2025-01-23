@@ -1,0 +1,101 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-----Montserat Font------>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
+    <!-----Material icons------>
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons+Outlined" rel="stylesheet">
+    <link rel="stylesheet" href="{% static '/CSS/User-Activity.css' %}">
+    <title>User Activity Management</title>
+</head>
+<body>
+    <div class="grid-container">
+        <header class="header">
+            <div class="menu-icon" onclick="openSidebar()">
+                <span class="material-icons-outlined">menu</span>
+            </div>
+            <div class="header-left">
+                <span class="material-icons-outlined">search</span>
+            </div>
+            <div class="header-right">
+                <span class="material-icons-outlined">account_circle</span>
+            </div>
+        </header>
+        <aside id="sidebar">
+            <div class="sidebar-title">
+                <div class="sidebar-brand">
+                    <span class="material-icons-outlined">shopping_cart</span> METROMANAGE
+                </div>
+                <span class="material-icons-outlined" onclick="closeSidebar()">close</span>
+            </div>
+
+            <ul class="sidebar-list">
+                <li class="sidebar-list-item">
+                    <span class="material-icons-outlined">dashboard</span> Dashboard
+                </li>
+                <li class="sidebar-list-item">
+                    <span class="material-icons-outlined">directions_bus</span><a href="/admin/bus">Bus Management</a>
+                </li>
+                <li class="sidebar-list-item">
+                    <span class="material-icons-outlined">route</span> <a href="/admin/routes"> Route Management</a>
+                </li>
+                <li class="sidebar-list-item">
+                    <span class="material-icons-outlined">people</span> Driver Management
+                </li>
+                <li class="sidebar-list-item">
+                    <span class="material-icons-outlined">paid</span> Payments
+                </li>
+                <li class="sidebar-list-item">
+                    <span class="material-icons-outlined">summarize</span> Reports
+                </li>
+                
+            </ul>
+
+        </aside>
+        <main class="main-container">
+            <div class="main-title">
+                <h2>USER ACTIVITY</h2>
+            </div>
+        
+              <div class="reports-container">
+            
+                <!-- Filters Section -->
+                <div class="filters">
+                  <label for="date-filter">Filter by Date:</label>
+                  <input type="date" id="date-filter">
+            
+                  <label for="type-filter">Filter by Type:</label>
+                  <select id="type-filter">
+                    <option value="all">All</option>
+                    <option value="payment">Payment Logs</option>
+                    <option value="route">Route Logs</option>
+                    <option value="activity">General Activities</option>
+                  </select>
+            
+                  <button id="filter-btn" class="btn">Apply Filters</button>
+                </div>
+            
+                <!-- Reports Table -->
+                <table id="reports-table">
+                  <thead>
+                    <tr>
+                      <th>Log ID</th>
+                      <th>Description</th>
+                      <th>Date</th>
+                      <th>Type</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <!-- Dynamic Rows -->
+                  </tbody>
+                </table>
+              </div>
+            
+              <script src="{% static '/Js/User-Activity.js' %}"></script>
+            
+            
+</body>
+</html>

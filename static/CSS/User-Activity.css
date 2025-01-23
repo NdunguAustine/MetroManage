@@ -1,0 +1,206 @@
+body {
+    margin: 0;
+    padding: 0;
+    background: #1d2634;
+    color: #9e9ea4;
+    font-family: "Montserrat", sans-serif;
+}
+
+.material-icons-outlined{
+   vertical-align: middle;
+   line-height: 1px;
+   font-size: 35px;
+}
+
+.grid-container{
+   display: grid;
+   grid-template-columns: 260px 1fr 1fr 1fr;
+   grid-template-rows: 0.2fr 3fr;
+   grid-template-areas:
+   "sidebar header header header"
+   "sidebar main main main";
+   height: 100vh;
+}
+/*..............Header.................*/
+.header{
+   grid-area: header;
+   height: 70px;
+   display: flex;
+   align-items: center;
+   justify-content: space-between;
+   padding: 0 30px 0 30px;
+   box-shadow: 0 60px 7px -3px rgba(0, 0, 0, 0.35);
+}
+
+.menu-icon{
+   display: none;
+}
+
+/*..............Sidebar.................*/
+#sidebar{
+   grid-area: sidebar;
+   height: 100%;
+   background-color: #263043;
+   overflow-y: auto;
+   transition: all 0.5s;
+   -webkit-transition: all 0.5s;
+}
+
+.sidebar-title {
+   display: flex;
+   justify-content: space-between;
+   align-items: center;
+   padding: 30px 30px;
+   margin-bottom: 30px;
+}
+.sidebar-title > span{
+   display: none;
+}
+
+.sidebar-brand{
+   margin-top: 15px;
+   font-size: 20px;
+   font-weight: 700;
+}
+
+.sidebar-list{
+   padding: 0;
+   margin-top: 15px;
+   list-style-type: none;
+}
+
+.sidebar-list-item{
+   padding: 20px 20px 20px 20px;
+   font-size: 18px;
+}
+.sidebar-list-item > a {
+   text-decoration: none; /* Removes underline */
+   color: inherit; /* Makes the link take the color of its parent element */
+   background: none; /* Removes any background */
+   border: none; /* Removes any border */
+   padding: 0; /* Removes padding */
+   margin: 0; /* Removes margin */
+   font: inherit; /* Resets font to inherit from parent */
+   cursor: default; /* Removes pointer cursor */
+     
+}
+.sidebar-list-item:hover{
+   background-color: rgba(255, 255, 255, 0.2);
+   cursor: pointer;
+}
+
+.sidebar-responsive{
+   display: inline !important;
+   position: absolute;
+   z-index: 12 !important;
+}
+
+/*..............Main Container.................*/
+.main-container{
+   grid-area: main;
+   overflow-y: auto;
+   padding: 20px 20px;
+   color: rgba(255, 255, 255, 0.95);
+}
+
+.main-title{
+   display: flex;
+   justify-content: space-between;
+}
+
+  
+  /* Container */
+  .reports-container {
+    max-width: 1200px;
+    margin: 30px auto;
+    padding: 20px;
+    background: #fff;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    border-radius: 8px;
+  }
+  
+
+  
+  /* Filters Section */
+  .filters {
+    display: flex;
+    gap: 15px;
+    margin-bottom: 20px;
+  }
+  
+  .filters label {
+    font-weight: bold;
+  }
+  
+  .filters input, 
+  .filters select, 
+  .filters button {
+    padding: 10px;
+    font-size: 1rem;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+  }
+  
+  .filters button {
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+    cursor: pointer;
+    text-transform: uppercase;
+  }
+  
+  .filters button:hover {
+    background-color: #45a049;
+  }
+  
+  /* Reports Table */
+  #reports-table {
+    width: 100%;
+    border-collapse: collapse;
+    background-color: #ffffff;
+    font-size: 1rem;
+    color: #333;
+  }
+  
+  #reports-table th {
+    background-color: #4CAF50;
+    color: white;
+    text-align: left;
+    padding: 10px 15px;
+    text-transform: uppercase;
+    border-bottom: 2px solid #ddd;
+  }
+  
+  #reports-table td {
+    padding: 10px 15px;
+    border-bottom: 1px solid #ddd;
+    text-align: left;
+  }
+  
+  #reports-table tbody tr:nth-child(even) {
+    background-color: #f9f9f9;
+  }
+  
+  #reports-table tbody tr:hover {
+    background-color: #f1f1f1;
+    cursor: pointer;
+  }
+  
+  /* Responsive Design */
+  @media (max-width: 768px) {
+    #reports-table {
+      font-size: 0.9rem;
+    }
+  
+    #reports-table th, 
+    #reports-table td {
+      padding: 8px 10px;
+    }
+  
+    .filters input, 
+    .filters select, 
+    .filters button {
+      font-size: 0.9rem;
+    }
+  }
+  
