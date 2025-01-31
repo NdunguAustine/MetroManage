@@ -1,65 +1,9 @@
+{% extends 'main/UserBase.html' %}
 {% load static %}
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <!-----Montserat Font------>
-    <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
-    <!-----Material icons------>
-    <link href="https://fonts.googleapis.com/icon?family=Material+Icons+Outlined" rel="stylesheet">
-    <link rel="stylesheet" href="{% static '/CSS/User-Profile.css' %}">
-    <title>User Profile</title>
-</head>
-<body>
-    <div class="grid-container">
-        <header class="header">
-            <div class="menu-icon" onclick="openSidebar()">
-                <span class="material-icons-outlined">menu</span>
-            </div>
-            <div class="header-left">
-                <span class="material-icons-outlined">search</span>
-            </div>
-            <div class="header-right">
-                <span class="material-icons-outlined">account_circle</span>
-            </div>
-        </header>
-        <aside id="sidebar">
-            <div class="sidebar-title">
-                <div class="sidebar-brand">
-                    <span class="material-icons-outlined">shopping_cart</span> METROMANAGE
-                </div>
-                <span class="material-icons-outlined" onclick="closeSidebar()">close</span>
-            </div>
+{% block title %} USER PROFILE {% endblock %}
 
-            <ul class="sidebar-list">
-                <li class="sidebar-list-item">
-                    <span class="material-icons-outlined">dashboard</span> Dashboard
-                </li>
-                <li class="sidebar-list-item">
-                    <span class="material-icons-outlined">directions_bus</span><a href="/admin/bus">Bus Management</a>
-                </li>
-                <li class="sidebar-list-item">
-                    <span class="material-icons-outlined">route</span> <a href="/admin/routes"> Route Management</a>
-                </li>
-                <li class="sidebar-list-item">
-                    <span class="material-icons-outlined">people</span> Driver Management
-                </li>
-                <li class="sidebar-list-item">
-                    <span class="material-icons-outlined">paid</span> Payments
-                </li>
-                <li class="sidebar-list-item">
-                    <span class="material-icons-outlined">summarize</span> Reports
-                </li>
-                
-            </ul>
-
-        </aside>
-        <main class="main-container">
-            <div class="main-title">
-                <h2>USER PROFILE</h2>
-            </div>
-        
+{% block content %}
+<link rel="stylesheet" href="{% static 'CSS/User-Profile.css' %}">
               <div class="profile-container">
                 <h1>User Profile Management</h1>
                 <form id="profile-form" class="profile-form">
@@ -100,5 +44,4 @@
             
               <script src="{% static '/Js/User-Profile.js' %}"></script>>
             
-</body>
-</html>
+{% endblock %}

@@ -1,66 +1,9 @@
+{% extends 'main/base.html' %}
 {% load static %}
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="{% static 'CSS/styles.css' %}">
-    <!-----Montserat Font------>
-    <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
-    <!-----Material icons------>
-    <link href="https://fonts.googleapis.com/icon?family=Material+Icons+Outlined" rel="stylesheet">
+{% block title %} USER ACTIVITY {% endblock %}
 
-    <title>Admin Dashboard</title>
-</head>
-<body>
-    <div class="grid-container">
-        <header class="header">
-            <div class="menu-icon" onclick="openSidebar()">
-                <span class="material-icons-outlined">menu</span>
-            </div>
-            <div class="header-left">
-                <span class="material-icons-outlined">search</span>
-            </div>
-            <div class="header-right">
-                <span class="material-icons-outlined">account_circle</span>
-            </div>
-        </header>
-        <aside id="sidebar">
-            <div class="sidebar-title">
-                <div class="sidebar-brand">
-                    <span class="material-icons-outlined">shopping_cart</span> METROMANAGE
-                </div>
-                <span class="material-icons-outlined" onclick="closeSidebar()">close</span>
-            </div>
-
-            <ul class="sidebar-list">
-                <li class="sidebar-list-item">
-                    <span class="material-icons-outlined">dashboard</span> Dashboard
-                </li>
-                <li class="sidebar-list-item">
-                    <span class="material-icons-outlined">directions_bus</span><a href="/admin/bus">Bus Management</a>
-                </li>
-                <li class="sidebar-list-item">
-                    <span class="material-icons-outlined">route</span> <a href="/admin/routes"> Route Management</a>
-                </li>
-                <li class="sidebar-list-item">
-                    <span class="material-icons-outlined">people</span> Driver Management
-                </li>
-                <li class="sidebar-list-item">
-                    <span class="material-icons-outlined">paid</span> Payments
-                </li>
-                <li class="sidebar-list-item">
-                    <span class="material-icons-outlined">summarize</span> Reports
-                </li>
-                
-            </ul>
-
-<!---------Main Section------------>
-        </aside>
-        <main class="main-container">
-            <div class="main-title">
-                <h2>DASHBOARD</h2>
-            </div>
+{% block content %}
+<link rel="stylesheet" href="{% static 'CSS/styles.css' %}">
             <div class="main-cards">
                 <div class="card">
                     <div class="card-inner">
@@ -111,5 +54,4 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/apexcharts/4.3.0/apexcharts.min.js"></script>
 <!-----Custom Js-->
     <script src="{% static 'Js/scripts.js' %}"></script>
-</body>
-</html>
+{% endblock %}

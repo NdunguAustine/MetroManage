@@ -1,0 +1,49 @@
+{% extends 'main/UserBase.html' %}
+{% load static %}
+{% block title %} USER DASHBOARD {% endblock %}
+
+{% block content %}
+<link rel="stylesheet" href="{% static 'CSS/User-Dashboard.css' %}">
+            <div class="main-cards">
+                <div class="card">
+                    <div class="card-inner">
+                        <h3>Assigned Bus</h3>
+                        <span class="material-icons-outlined">directions_bus</span>
+                    </div>
+                    <h1>Bus 45</h1>
+                </div>
+
+                <div class="card">
+                    <div class="card-inner">
+                        <h3>Pending Payments</h3>
+                        <span class="material-icons-outlined">paid</span>
+                    </div>
+                    <h1>KES 5,200</h1>
+                </div>
+
+                <div class="card">
+                    <div class="card-inner">
+                        <h3>Today's Routes</h3>
+                        <span class="material-icons-outlined">route</span>
+                    </div>
+                    <h1>3</h1>
+                </div>
+            </div>
+            <div class="charts">
+                <div class="charts-card">
+                    <h2 class="chart-title">Earnings Overview</h2>
+                    <div id="line-chart"></div>
+                </div>
+                <div class="charts-card">
+                    <h2 class="chart-title">Route Completion Status</h2>
+                    <div id="donut-chart"></div>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <!-- Apex Charts -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/apexcharts/4.3.0/apexcharts.min.js"></script>
+    <!-- Custom JS -->
+    <script src="{% static 'Js/User-Dashboard.js' %}"></script>
+{% endblock %}

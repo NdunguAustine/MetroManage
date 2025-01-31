@@ -33,3 +33,8 @@ def user_profile_view(request):
 
 def user_route_view(request):
     return render(request,"main/User-Route.html", {})
+
+def user_dashboard_view(request):
+    return render(request, "main/User-Dashboard.html", {})
+def user_login_view(request):
+    return render(request, "main/login.html", {})
