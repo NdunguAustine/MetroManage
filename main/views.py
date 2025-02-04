@@ -1,8 +1,11 @@
 from django.shortcuts import render
 from django.contrib.auth.models import User
-from auth0.utils import is_admin
+from auth0.utils import is_admin, create_user
 from django.http import JsonResponse
 from django.contrib.auth.decorators import login_required
+from .models import DriverConductor
+from .generate_hash import Generator
+from django.contrib.auth.models import Group
 
 # Create your views here.
 def index(request):
@@ -11,30 +14,57 @@ def index(request):
 def admin_bus_view(request):
     return render(request,"main/Admin-Bus.html", {})
 
-@login_required(login_url='/auth/login')
+@login_required(login_url='/user/login')
 def admin_driver_view(request):
     user = request.user
     if user.is_authenticated and is_admin(user):
         if request.method == "GET":
             return render(request,"main/Admin-driver.html", {})
         elif request.method == "POST":
-            email = request.POST.get("driver-name")
-            password = request.POST.get("driver-contact")
-            if email and password:
+            email = request.POST.get("email")
+            driverID = request.POST.get("driverID")
+            first_name = request.POST.get("first_name")
+            last_name = request.POST.get("last_name")
+            d_o_b = request.POST.get("date_of_birth")
+            gender = request.POST.get("gender")
+            phone = request.POST.get("phone")
+
+            if email and driverID and first_name and last_name and d_o_b and gender and phone:
                 try:
-                    user = User.objects.create_user(
-                        username=email,
-                        email=email,
-                        password=password
-                    )
-                    return JsonResponse(
-                        {
-                            "message":"Account created!",
+                    data = {
+                        "driverID": driverID,
+                        "email": email,
+                        "first_name": first_name,
+                        "last_name": last_name
+                    }
+                    is_success, response = create_user(data=data)
+                    if is_success:
+                        user = response["user"]
+                        userID = Generator()
+                        driver_conductor = DriverConductor.objects.create(
+                            profile= user,
+                            first_name=first_name,
+                            last_name=last_name,
+                            userID = userID,
+                            driverID=driverID,
+                            gender=gender,
+                            date_of_birth=d_o_b,
+                            phone=phone,
+                            email=email
+                        )
+                        driver_conductor.save()
+
+                        group_name, created = create_group("user")
+
+                        group_name.user_set.add(user)
+                        return JsonResponse({
+                            "message": "User added",
                             "status": 200
-                        },
-                        status=200
-                    )
+                        }, status=200)
+                    else:
+                        return JsonResponse(response, status=response["status"])
                 except Exception as e:
+                    print(f"Error {e}")
                     return JsonResponse(
                         {
                             "message": f"Error {e}",
@@ -56,6 +86,9 @@ def admin_driver_view(request):
             "message":"Not authorised!",
             "status": 401
         }, status=401)
+    
+def create_group(group_name):
+    return Group.objects.get_or_create(name=group_name)
  
 def admin_report_view(request):
     return render(request,"main/Admin-Reports.html", {})

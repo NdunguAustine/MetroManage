@@ -7,33 +7,34 @@
 <div class="container">
   <h2>Register Driver/Conductor</h2>
   <form id="driverForm">
+    {% csrf_token %}
       <label>User ID:</label>
-      <input type="text" id="userID" required>
+      <input type="text" id="userID" name="userID" required>
       
       <label>Driver ID:</label>
-      <input type="text" id="driverID" required>
+      <input type="text" id="driverID" name="driverID"  required>
       
       <label>Email:</label>
-      <input type="email" id="email" required>
+      <input type="email" id="email" name="email" required>
       
       <label>First Name:</label>
-      <input type="text" id="first_name" required>
+      <input type="text" id="first_name" name="first_name" required>
       
       <label>Last Name:</label>
-      <input type="text" id="last_name" required>
+      <input type="text" id="last_name" name="last_name" required>
       
       <label>Date of Birth:</label>
-      <input type="date" id="date_of_birth" required>
+      <input type="date" id="date_of_birth" name="date_of_birth" required>
       
       <label>Gender:</label>
-      <select id="gender" required>
+      <select id="gender" name="gender" required>
           <option value="Male">Male</option>
           <option value="Female">Female</option>
           <option value="Other">Other</option>
       </select>
       
       <label>Phone:</label>
-      <input type="text" id="phone" required>
+      <input type="text" id="phone" name="phone" required>
       
       <button type="submit">Register</button>
   </form>
