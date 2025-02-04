@@ -1,26 +1,26 @@
+document.getElementById("driverForm").addEventListener("submit", function(event) {
+  event.preventDefault();
 
+  let userID = document.getElementById("userID").value;
+  let driverID = document.getElementById("driverID").value;
+  let email = document.getElementById("email").value;
+  let first_name = document.getElementById("first_name").value;
+  let last_name = document.getElementById("last_name").value;
+  let date_of_birth = document.getElementById("date_of_birth").value;
+  let gender = document.getElementById("gender").value;
+  let phone = document.getElementById("phone").value;
 
-document.getElementById('driver-form').addEventListener('submit', function (e) {
-    e.preventDefault();
-    const name = document.getElementById('driver-name').value;
-    const contact = document.getElementById('driver-contact').value;
-    const bus = document.getElementById('driver-bus').value;
-    addOrUpdateDriver(name, contact, bus);
-  });
+  let tableBody = document.getElementById("driverTableBody");
+  let row = tableBody.insertRow();
   
-  function addOrUpdateDriver(name, contact, bus) {
-    const driverList = document.getElementById('driver-list').querySelector('tbody');
-    let row = [...driverList.rows].find(row => row.cells[0].textContent === name);
-    if (row) {
-      row.cells[1].textContent = contact;
-      row.cells[2].textContent = bus;
-    } else {
-      row = driverList.insertRow();
-      row.innerHTML = `<td>${name}</td><td>${contact}</td><td>${bus}</td><td><button onclick="deleteDriver(this)">Delete</button></td>`;
-    }
-  }
-  
-  function deleteDriver(button) {
-    button.closest('tr').remove();
-  }
-  
+  row.insertCell(0).textContent = userID;
+  row.insertCell(1).textContent = driverID;
+  row.insertCell(2).textContent = email;
+  row.insertCell(3).textContent = first_name;
+  row.insertCell(4).textContent = last_name;
+  row.insertCell(5).textContent = date_of_birth;
+  row.insertCell(6).textContent = gender;
+  row.insertCell(7).textContent = phone;
+
+  this.reset();
+});

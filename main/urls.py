@@ -14,5 +14,6 @@ urlpatterns = [
     path("user/profile",  view=views.user_profile_view, name="user_profile_view"),
     path("user/routes",  view=views.user_route_view, name="user_route_view"),
     path("user/dashboard", view=views.user_dashboard_view, name="user_dashboard_view"),
-    path("user/login", view=views.user_login_view, name="user_login_view")
+    path("user/login", view=views.user_login_view, name="user_login_view"),
+    
 ]

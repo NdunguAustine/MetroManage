@@ -1,128 +1,59 @@
+body {
+  font-family: Arial, sans-serif;
+  background-color: #f4f4f4;
+  padding: 20px;
+}
 
-/* Driver/Conductor Management Module Styling */
-#driver-management {
-    margin: 20px auto;
-    padding: 20px;
-    width: 90%;
-    max-width: 800px;
-    background-color: #ffffff;
-    border: 1px solid #ddd;
-    border-radius: 8px;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-  }
-  
-  /* Module Header */
-  #driver-management h2 {
-    font-size: 1.8rem;
-    color: #333;
-    text-align: center;
-    font-weight: bold;
-    margin-bottom: 20px;
-  }
-  
-  /* Form Styling */
-  #driver-management form {
-    display: flex;
-    flex-direction: column;
-    gap: 15px;
-  }
-  
-  #driver-management input,
-  #driver-management select,
-  #driver-management button {
-    padding: 10px;
-    font-size: 1rem;
-    border: 1px solid #ccc;
-    border-radius: 5px;
-    box-sizing: border-box;
-  }
-  
-  #driver-management textarea {
-    resize: vertical;
-    min-height: 60px;
-  }
-  
-  #driver-management select {
-    cursor: pointer;
-    background-color: #f9f9f9;
-  }
-  
-  #driver-management button {
-    background-color: #4CAF50;
-    color: #fff;
-    font-weight: bold;
-    cursor: pointer;
-    border: none;
-    transition: background-color 0.3s ease;
-  }
-  
-  #driver-management button:hover {
-    background-color: #45a049;
-  }
-  
-  /* Search Box Styling */
-  #driver-management #search-driver {
-    width: 100%;
-    padding: 10px;
-    border: 1px solid #ddd;
-    border-radius: 5px;
-    margin-bottom: 20px;
-  }
-  
-  /* Table Styling */
-  #driver-management table {
-    width: 100%;
-    border-collapse: collapse;
-    margin-top: 20px;
-  }
-  
-  #driver-management table th,
-  #driver-management table td {
-    border: 1px solid #ddd;
-    text-align: left;
-    padding: 12px;
-    font-size: 1rem;
-  }
-  
-  #driver-management table th {
-    background-color: #f4f4f4;
-    font-weight: bold;
-  }
-  
-  #driver-management table tr:nth-child(even) {
-    background-color: #f9f9f9;
-  }
-  
-  #driver-management table tr:hover {
-    background-color: #f1f1f1;
-  }
-  
-  /* Action Buttons */
-  #driver-management .action-buttons button {
-    padding: 5px 10px;
-    font-size: 0.9rem;
-    margin-right: 5px;
-    border: none;
-    border-radius: 3px;
-    cursor: pointer;
-    transition: background-color 0.3s ease;
-  }
-  
-  #driver-management .action-buttons .edit {
-    background-color: #2196F3;
-    color: #fff;
-  }
-  
-  #driver-management .action-buttons .edit:hover {
-    background-color: #1e88e5;
-  }
-  
-  #driver-management .action-buttons .delete {
-    background-color: #f44336;
-    color: #fff;
-  }
-  
-  #driver-management .action-buttons .delete:hover {
-    background-color: #e53935;
-  }
-  
+.container {
+  max-width: 600px;
+  margin: auto;
+  background: white;
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+form {
+  display: flex;
+  flex-direction: column;
+}
+
+label {
+  margin-top: 10px;
+  font-weight: bold;
+}
+
+input, select, button {
+  margin-top: 5px;
+  padding: 8px;
+  border-radius: 4px;
+  border: 1px solid #ccc;
+}
+
+button {
+  background-color: #28a745;
+  color: white;
+  cursor: pointer;
+  margin-top: 15px;
+}
+
+button:hover {
+  background-color: #218838;
+}
+
+table {
+  width: 100%;
+  margin-top: 20px;
+  border-collapse: collapse;
+}
+
+th, td {
+  border: 1px solid #ddd;
+  padding: 8px;
+  text-align: left;
+}
+
+th {
+  background-color: #007bff;
+  color: white;
+}

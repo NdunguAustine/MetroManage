@@ -1,25 +1,23 @@
-document.addEventListener("DOMContentLoaded", function () {
-    const loginForm = document.getElementById("login-form");
+document.getElementById("login-form").addEventListener("submit", async function(event) {
+    event.preventDefault(); // Prevent default form submission
 
-    loginForm.addEventListener("submit", function (event) {
-        event.preventDefault(); // Prevent form from refreshing the page
+    const email = document.getElementById("email").value;
+    const password = document.getElementById("password").value;
+    const role = document.getElementById("role").value;
 
-        // Get form values
-        const role = document.getElementById("role").value;
-        const email = document.getElementById("email").value;
-        const password = document.getElementById("password").value;
+    
 
-        // Simple validation
-        if (email.trim() === "" || password.trim() === "") {
-            alert("Please fill in all fields.");
-            return;
-        }
-
-        // Simulated authentication
-        if (role === "admin") {
-            window.location.href = "admin-dashboard.html"; // Redirect to Admin Dashboard
-        } else {
-            window.location.href = "user-dashboard.html"; // Redirect to User Dashboard
-        }
+    const formData = new FormData(this);
+    const response = await fetch("/auth/login", {
+        method: "POST",
+        body: formData,
+    }).then(response=>{
+        return response.json();
+    }).then(data=>{
+        const message = data.message;
+        const status =data.status;
+        alert(message)
+    }).catch(error=>{
+        console.error("Error: ",error);
     });
 });

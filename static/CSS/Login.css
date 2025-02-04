@@ -1,122 +1,44 @@
-/* General Styling */
 body {
-    font-family: 'Montserrat', sans-serif;
-    background: #1d2634;
-    color: #fff;
+    font-family: Arial, sans-serif;
     display: flex;
     justify-content: center;
     align-items: center;
     height: 100vh;
-    margin: 0;
+    background-color: #f4f4f4;
 }
 
-/* Login Container */
 .login-container {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 100%;
-    width: 100%;
-}
-
-/* Login Box */
-.login-box {
-    background: #263043;
-    padding: 40px;
-    border-radius: 8px;
-    box-shadow: 0 6px 10px rgba(0, 0, 0, 0.3);
+    background: white;
+    padding: 20px;
+    border-radius: 5px;
+    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+    width: 300px;
     text-align: center;
-    width: 350px;
-}
-
-h2 {
-    margin-bottom: 10px;
-    font-weight: 600;
-}
-
-p {
-    margin-bottom: 20px;
-    font-size: 14px;
-    color: #bbb;
-}
-
-/* Form */
-form {
-    display: flex;
-    flex-direction: column;
-}
-
-label {
-    text-align: left;
-    font-size: 14px;
-    margin-bottom: 5px;
 }
 
 input, select {
-    padding: 10px;
-    border: none;
-    border-radius: 5px;
-    margin-bottom: 15px;
-    font-size: 14px;
     width: 100%;
+    padding: 8px;
+    margin: 10px 0;
+    border: 1px solid #ccc;
+    border-radius: 4px;
 }
 
-input:focus, select:focus {
-    outline: none;
-    box-shadow: 0 0 5px #ffcc00;
-}
-
-/* Form Footer */
-.form-footer {
-    text-align: right;
-    font-size: 12px;
-}
-
-.form-footer a {
-    color: #ffcc00;
-    text-decoration: none;
-}
-
-.form-footer a:hover {
-    text-decoration: underline;
-}
-
-/* Submit Button */
 button {
-    background: #ffcc00;
-    color: #000;
-    padding: 12px;
+    width: 100%;
+    padding: 10px;
+    background-color: #007bff;
+    color: white;
     border: none;
-    border-radius: 5px;
-    font-size: 16px;
+    border-radius: 4px;
     cursor: pointer;
-    font-weight: 600;
 }
 
 button:hover {
-    background: #e6b800;
+    background-color: #0056b3;
 }
 
-/* Signup Link */
-.signup-link {
-    margin-top: 15px;
+.error-message {
+    color: red;
     font-size: 14px;
-}
-
-.signup-link a {
-    color: #ffcc00;
-    text-decoration: none;
-    font-weight: 600;
-}
-
-.signup-link a:hover {
-    text-decoration: underline;
-}
-
-/* Responsive Design */
-@media (max-width: 400px) {
-    .login-box {
-        width: 90%;
-        padding: 30px;
-    }
 }
