@@ -7,7 +7,7 @@ from .models import DriverConductor
 from .generate_hash import Generator
 from django.contrib.auth.models import Group
 from django.core.paginator import Paginator
-from .models import DriverConductor
+from .models import DriverConductor, RouteDetails
 from .forms import DriverConductorForm
 
 # Create your views here.
@@ -22,7 +22,9 @@ def admin_driver_view(request):
     user = request.user
     if user.is_authenticated and is_admin(user):
         if request.method == "GET":
-            return render(request,"main/Admin-driver.html", {})
+            drivers = DriverConductor.objects.all()
+
+            return render(request,"main/Admin-driver.html", {"drivers": drivers})
         elif request.method == "POST":
             email = request.POST.get("email")
             driverID = request.POST.get("driverID")
@@ -89,30 +91,6 @@ def admin_driver_view(request):
             "message":"Not authorised!",
             "status": 401
         }, status=401)
-    
-
-# Added for displaying driver list
-
-def driver_list(request):
-    drivers = DriverConductor.objects.all()
-    paginator = Paginator(drivers, 10)  # Show 10 drivers per page
-    page_number = request.GET.get('page')
-    page_obj = paginator.get_page(page_number)
-    
-    return render(request, 'driver_list.html', {'drivers': page_obj})
-
-# adding driver
-
-def add_driver(request):
-    if request.method == 'POST':
-        form = DriverConductorForm(request.POST)
-        if form.is_valid():
-            form.save()
-            return redirect('driver_list')  # Redirect to driver list after successful registration
-    else:
-        form = DriverConductorForm()
-
-    return render(request, 'driver_registration.html', {'form': form})
 
 
 def create_group(group_name):
@@ -122,7 +100,38 @@ def admin_report_view(request):
     return render(request,"main/Admin-Reports.html", {})
 
 def admin_route_view(request):
-    return render(request,"main/Admin-Route.html", {})
+    if request.method == "GET":
+        return render(request,"main/Admin-Route.html", {})
+
+    elif request.method == "POST":
+        name = request.POST.get("route-name", None)
+        start = request.POST.get("route-start", None)
+        destination = request.POST.get("route-end", None)
+
+        if start is None or destination is None:
+            return JsonResponse({
+                "message":"All fields required.",
+                "status":400
+            }, status=400)
+        
+        try:
+            new_route = RouteDetails.objects.create(
+                routeID=Generator(),
+                routeName="Default Name",
+                startRoute=start,
+                destination=destination
+            )
+            new_route.save()
+            return JsonResponse({
+                "message":"Route details added!",
+                "status":200
+            },status=200)
+        
+        except Exception as e:
+            return JsonResponse({
+                "message":f"Error: {e}",
+                "status":500
+            }, status=500)
 
 def admin_payment_view(request):
     return render(request,"main/AdminPayments.html", {})
@@ -144,7 +153,9 @@ def user_route_view(request):
 
 def user_dashboard_view(request):
     return render(request, "main/User-Dashboard.html", {})
+
 def user_login_view(request):
     return render(request, "main/login.html", {})
+
 def admin_addDriver_view(request):
     return render(request,"main/Admin-add-driver.html")

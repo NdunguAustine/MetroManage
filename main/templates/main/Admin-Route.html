@@ -6,8 +6,9 @@
 <link rel="stylesheet" href="{% static 'CSS/Admin-route.css' %}">
     <div class="module" id="route-management">
         <form id="route-form">
-          <input type="text" id="route-start" placeholder="Start Point" required />
-          <input type="text" id="route-end" placeholder="Destination" required />
+          {% csrf_token %}
+          <input type="text" id="route-start" name="route-start" placeholder="Start Point" required />
+          <input type="text" id="route-end" name="route-end" placeholder="Destination" required />
           <textarea id="route-stops" placeholder="Stops (comma-separated)"></textarea>
           <button type="submit">Add/Update Route</button>
         </form>

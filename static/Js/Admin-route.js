@@ -5,9 +5,28 @@ document.getElementById('route-form').addEventListener('submit', function (e) {
     const start = document.getElementById('route-start').value;
     const end = document.getElementById('route-end').value;
     const stops = document.getElementById('route-stops').value;
-    addOrUpdateRoute(start, end, stops);
+
+    const formData = new FormData(this);
+
+    fetch("/admin/routes",{
+      method: "POST",
+      body: formData
+    }).then(response=>{
+      if(!response.ok){
+        throw new Error("Server error");
+      }
+      return response.json()
+    }).then(data=>{
+      console.log(data);
+
+      const message = data.message;
+      const status = data.status;
+      alert(message);
+
+      this.reset();
+      addOrUpdateRoute(start, end, stops);
   });
-  
+});
   function addOrUpdateRoute(start, end, stops) {
     const routeList = document.getElementById('route-list').querySelector('tbody');
     let row = [...routeList.rows].find(row => row.cells[0].textContent === start && row.cells[1].textContent === end);

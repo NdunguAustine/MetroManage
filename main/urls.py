@@ -1,6 +1,5 @@
 from django.urls import path
 from . import views
-from .views import driver_list, add_driver
 
 urlpatterns = [
     path("",  view=views.index, name="homepage"),

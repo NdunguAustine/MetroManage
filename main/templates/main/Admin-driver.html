@@ -13,8 +13,6 @@
     <table>
         <thead>
             <tr>
-                <th>User ID</th>
-                <th>Driver ID</th>
                 <th>Email</th>
                 <th>First Name</th>
                 <th>Last Name</th>
@@ -23,11 +21,9 @@
                 <th>Phone</th>
             </tr>
         </thead>
-        <tbody>
+        <tbody style="background-color: black!important;">
             {% for driver in drivers %}
             <tr>
-                <td>{{ driver.userID }}</td>
-                <td>{{ driver.driverID }}</td>
                 <td>{{ driver.email }}</td>
                 <td>{{ driver.first_name }}</td>
                 <td>{{ driver.last_name }}</td>

@@ -1,7 +1,7 @@
 from django.contrib import admin
-from .models import DriverConductor
+from .models import DriverConductor, RouteBus,RouteDetails
 
-models = [DriverConductor]
+models = [DriverConductor, RouteDetails,RouteBus]
 admin.site.register(models)
 
 # Register your models here.
