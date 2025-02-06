@@ -1,63 +1,58 @@
 {% extends 'main/base.html' %}
 {% load static %}
-{% block title %} DRIVER/CONDUCTOR MANAGEMENT {% endblock %}
+{% block title %} DRIVER/CONDUCTOR LIST {% endblock %}
 
 {% block content %}
 <link rel="stylesheet" href="{% static 'CSS/Admin-driver.css' %}">
-<div class="container">
-  <h2>Register Driver/Conductor</h2>
-  <form id="driverForm">
-    {% csrf_token %}
-      <label>User ID:</label>
-      <input type="text" id="userID" name="userID" required>
-      
-      <label>Driver ID:</label>
-      <input type="text" id="driverID" name="driverID"  required>
-      
-      <label>Email:</label>
-      <input type="email" id="email" name="email" required>
-      
-      <label>First Name:</label>
-      <input type="text" id="first_name" name="first_name" required>
-      
-      <label>Last Name:</label>
-      <input type="text" id="last_name" name="last_name" required>
-      
-      <label>Date of Birth:</label>
-      <input type="date" id="date_of_birth" name="date_of_birth" required>
-      
-      <label>Gender:</label>
-      <select id="gender" name="gender" required>
-          <option value="Male">Male</option>
-          <option value="Female">Female</option>
-          <option value="Other">Other</option>
-      </select>
-      
-      <label>Phone:</label>
-      <input type="text" id="phone" name="phone" required>
-      
-      <button type="submit">Register</button>
-  </form>
 
-  <h2>Registered Drivers/Conductors</h2>
-  <table>
-      <thead>
-          <tr>
-              <th>User ID</th>
-              <th>Driver ID</th>
-              <th>Email</th>
-              <th>First Name</th>
-              <th>Last Name</th>
-              <th>DOB</th>
-              <th>Gender</th>
-              <th>Phone</th>
-          </tr>
-      </thead>
-      <tbody id="driverTableBody">
-          <!-- Populated dynamically -->
-      </tbody>
-  </table>
+<div class="container">
+    <h2>Registered Drivers/Conductors</h2>
+    
+    <button class="add-btn" onclick="window.location.href= '/admin/addDriver'">Add Driver/Conductor</button>
+    
+    <table>
+        <thead>
+            <tr>
+                <th>User ID</th>
+                <th>Driver ID</th>
+                <th>Email</th>
+                <th>First Name</th>
+                <th>Last Name</th>
+                <th>DOB</th>
+                <th>Gender</th>
+                <th>Phone</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for driver in drivers %}
+            <tr>
+                <td>{{ driver.userID }}</td>
+                <td>{{ driver.driverID }}</td>
+                <td>{{ driver.email }}</td>
+                <td>{{ driver.first_name }}</td>
+                <td>{{ driver.last_name }}</td>
+                <td>{{ driver.date_of_birth }}</td>
+                <td>{{ driver.gender }}</td>
+                <td>{{ driver.phone }}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+
+    <!-- Pagination -->
+    <div class="pagination">
+        {% if drivers.has_previous %}
+            <a href="?page=1">First</a>
+            <a href="?page={{ drivers.previous_page_number }}">Previous</a>
+        {% endif %}
+        
+        <span>Page {{ drivers.number }} of {{ drivers.paginator.num_pages }}</span>
+        
+        {% if drivers.has_next %}
+            <a href="?page={{ drivers.next_page_number }}">Next</a>
+            <a href="?page={{ drivers.paginator.num_pages }}">Last</a>
+        {% endif %}
+    </div>
 </div>
 
-<script src="{% static '/Js/Admin-driver.js' %}"></script>
 {% endblock %}

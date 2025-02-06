@@ -1,4 +1,4 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from django.contrib.auth.models import User
 from auth0.utils import is_admin, create_user
 from django.http import JsonResponse
@@ -6,6 +6,9 @@ from django.contrib.auth.decorators import login_required
 from .models import DriverConductor
 from .generate_hash import Generator
 from django.contrib.auth.models import Group
+from django.core.paginator import Paginator
+from .models import DriverConductor
+from .forms import DriverConductorForm
 
 # Create your views here.
 def index(request):
@@ -87,6 +90,31 @@ def admin_driver_view(request):
             "status": 401
         }, status=401)
     
+
+# Added for displaying driver list
+
+def driver_list(request):
+    drivers = DriverConductor.objects.all()
+    paginator = Paginator(drivers, 10)  # Show 10 drivers per page
+    page_number = request.GET.get('page')
+    page_obj = paginator.get_page(page_number)
+    
+    return render(request, 'driver_list.html', {'drivers': page_obj})
+
+# adding driver
+
+def add_driver(request):
+    if request.method == 'POST':
+        form = DriverConductorForm(request.POST)
+        if form.is_valid():
+            form.save()
+            return redirect('driver_list')  # Redirect to driver list after successful registration
+    else:
+        form = DriverConductorForm()
+
+    return render(request, 'driver_registration.html', {'form': form})
+
+
 def create_group(group_name):
     return Group.objects.get_or_create(name=group_name)
  
@@ -118,3 +146,5 @@ def user_dashboard_view(request):
     return render(request, "main/User-Dashboard.html", {})
 def user_login_view(request):
     return render(request, "main/login.html", {})
+def admin_addDriver_view(request):
+    return render(request,"main/Admin-add-driver.html")

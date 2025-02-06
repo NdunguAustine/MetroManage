@@ -1,5 +1,6 @@
 from django.urls import path
 from . import views
+from .views import driver_list, add_driver
 
 urlpatterns = [
     path("",  view=views.index, name="homepage"),
@@ -15,5 +16,8 @@ urlpatterns = [
     path("user/routes",  view=views.user_route_view, name="user_route_view"),
     path("user/dashboard", view=views.user_dashboard_view, name="user_dashboard_view"),
     path("user/login", view=views.user_login_view, name="user_login_view"),
+    path("admin/addDriver", view=views.admin_addDriver_view, name="admin_addDriver_view"),
+
     
 ]
+
