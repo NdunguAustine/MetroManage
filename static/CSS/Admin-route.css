@@ -17,10 +17,6 @@
   margin-bottom: 20px;
 }
 
-#route-form textarea {
-  grid-column: span 2;
-}
-
 #route-form input,
 #route-form textarea,
 #route-form button {

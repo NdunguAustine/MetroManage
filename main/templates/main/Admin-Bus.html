@@ -1,32 +1,33 @@
+<!-- bus_list.html -->
 {% extends 'main/base.html' %}
 {% load static %}
-{% block title %} BUS MANAGEMENT {% endblock %}
+{% block title %}Bus Management{% endblock %}
 
 {% block content %}
-<link rel="stylesheet" href="{% static 'CSS/Admin-Bus.css' %}">
-    <div class="module" id="bus-management">
-        <form id="bus-form">
-          <input type="text" id="bus-reg" placeholder="Bus Registration" required />
-          <select id="bus-status">
-            <option value="in-transit">In Transit</option>
-            <option value="under-maintenance">Under Maintenance</option>
-            <option value="parked">Parked</option>
-            <option value="awaiting">Awaiting</option>
-          </select>
-          <button type="submit">Add/Update Bus</button>
-        </form>
-        <input type="text" id="search-bus" placeholder="Search Bus..." />
-        <table id="bus-list">
-          <thead>
+<link rel="stylesheet" href="{% static 'CSS/Admin-add-bus.css' %}">
+<div class="container">
+    <h2>Bus Management</h2>
+    <button id="addBusBtn" onclick="location.href='/admin/addBus'">Add Bus</button>
+    <table>
+        <thead>
             <tr>
-              <th>Registration</th>
-              <th>Status</th>
-              <th>Actions</th>
+                <th>Bus ID</th>
+                <th>Route</th>
+                <th>Status</th>
+                <th>Capacity</th>
+                <th>Current Location</th>
+                <th>Driver</th>
+                <th>Conductor</th>
             </tr>
-          </thead>
-          <tbody></tbody>
-        </table>
-      </div>
-      
-      <script src="{% static '/Js/Amin-Bus.js' %}"></script>
+        </thead>
+        <tbody id="busTableBody">
+            <!-- Data populated dynamically -->
+        </tbody>
+    </table>
+    <div class="pagination">
+        <button id="prevPage">Previous</button>
+        <button id="nextPage">Next</button>
+    </div>
+</div>
+<script src="{% static 'Js/bus_management.js' %}"></script>
 {% endblock %}

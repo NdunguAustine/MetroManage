@@ -1,0 +1,37 @@
+{% extends 'main/base.html' %}
+{% load static %}
+{% block title %} Add Bus {% endblock %}
+
+{% block content %}
+<link rel="stylesheet" href="{% static 'CSS/Admin-add-bus.css' %}">
+<div class="container">
+    <h2>Add a New Bus</h2>
+    <form id="addBusForm">
+        {% csrf_token %}
+        
+        <label for="busID">Bus ID:</label>
+        <input type="text" id="busID" name="busID" required>
+
+        <label for="licensePlate">License Plate:</label>
+        <input type="text" id="licensePlate" name="licensePlate" required>
+
+        <label for="capacity">Capacity:</label>
+        <input type="number" id="capacity" name="capacity" required>
+
+        <label for="route">Route:</label>
+        <input type="text" id="route" name="route" required>
+
+        <label for="status">Status:</label>
+        <select id="status" name="status" required>
+            <option value="In Transit">In Transit</option>
+            <option value="Under Maintenance">Under Maintenance</option>
+            <option value="Parked">Parked</option>
+            <option value="Awaiting at Stage">Awaiting at Stage</option>
+        </select>
+
+        <button type="submit">Add Bus</button>
+    </form>
+</div>
+
+<script src="{% static 'JS/add_bus.js' %}"></script>
+{% endblock %}

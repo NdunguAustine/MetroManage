@@ -7,9 +7,9 @@
     <div class="module" id="route-management">
         <form id="route-form">
           {% csrf_token %}
+          <input type="text" id="route-name" name="route-name" placeholder="Route Name" required> <br>
           <input type="text" id="route-start" name="route-start" placeholder="Start Point" required />
           <input type="text" id="route-end" name="route-end" placeholder="Destination" required />
-          <textarea id="route-stops" placeholder="Stops (comma-separated)"></textarea>
           <button type="submit">Add/Update Route</button>
         </form>
         <input type="text" id="search-route" placeholder="Search Route..." />
@@ -18,7 +18,6 @@
             <tr>
               <th>Start</th>
               <th>Destination</th>
-              <th>Stops</th>
               <th>Actions</th>
             </tr>
           </thead>

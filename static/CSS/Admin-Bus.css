@@ -1,127 +1,75 @@
+/* Styling for Bus Management Page */
 
-
-.module {
-    margin: 20px;
-  }
-  #bus-list {
-    width: 100%;
-    border-collapse: collapse;
-  }
-  #bus-list th, #bus-list td {
-    border: 1px solid #ddd;
-    padding: 8px;
-  }
-
-
-
-
-/* Module Styling */
-#bus-management {
-  max-width: 800px;
-  margin: 50px auto;
+.container {
+  width: 90%;
+  max-width: 1200px;
+  margin: 20px auto;
   padding: 20px;
-  background: #ffffff;
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  background: #1d2634;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
   border-radius: 8px;
 }
 
-/* Form Styling */
-#bus-form {
-  display: flex;
-  gap: 10px;
+h2 {
+  text-align: center;
   margin-bottom: 20px;
 }
 
-#bus-form input,
-#bus-form select,
-#bus-form button {
+.add-bus-btn {
+  display: block;
+  width: 200px;
+  margin: 10px auto;
   padding: 10px;
-  border: 1px solid #ccc;
-  border-radius: 4px;
-  font-size: 14px;
+  background: #007bff;
+  color: white;
+  text-align: center;
+  text-decoration: none;
+  border-radius: 5px;
+  font-size: 16px;
 }
 
-#bus-form input,
-#bus-form select {
-  flex: 1;
+.add-bus-btn:hover {
+  background: #0056b3;
 }
 
-#bus-form button {
-  background-color: #007bff;
-  color: #fff;
-  border: none;
-  cursor: pointer;
-  transition: background-color 0.3s ease;
-}
-
-#bus-form button:hover {
-  background-color: #0056b3;
-}
-
-/* Search Input */
-#search-bus {
-  width: 100%;
-  padding: 10px;
-  border: 1px solid #ccc;
-  border-radius: 4px;
-  margin-bottom: 20px;
-  font-size: 14px;
-}
-
-/* Table Styling */
-#bus-list {
+table {
   width: 100%;
   border-collapse: collapse;
-  margin-top: 10px;
+  margin-top: 20px;
 }
 
-#bus-list th,
-#bus-list td {
-  padding: 10px 15px;
-  text-align: left;
+th, td {
+  padding: 10px;
   border: 1px solid #ddd;
+  text-align: center;
 }
 
-#bus-list th {
+th {
   background-color: #007bff;
-  color: #fff;
-  font-weight: bold;
+  color: white;
 }
 
-#bus-list tr:nth-child(even) {
-  background-color: #f9f9f9;
+tr:nth-child(even) {
+  background-color: #f2f2f2;
 }
 
-#bus-list tr:hover {
-  background-color: #f1f1f1;
+.pagination {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 20px;
 }
 
-/* Action Buttons */
-#bus-list .action-btn {
-  padding: 5px 10px;
-  font-size: 14px;
+.pagination button {
+  padding: 10px;
   border: none;
-  border-radius: 4px;
+  background: #007bff;
+  color: white;
   cursor: pointer;
+  border-radius: 5px;
+  font-size: 16px;
 }
 
-#bus-list .edit-btn {
-  background-color: #28a745;
-  color: #fff;
-  margin-right: 5px;
+.pagination button:disabled {
+  background: #cccccc;
+  cursor: not-allowed;
 }
-
-#bus-list .edit-btn:hover {
-  background-color: #218838;
-}
-
-#bus-list .delete-btn {
-  background-color: #dc3545;
-  color: #fff;
-}
-
-#bus-list .delete-btn:hover {
-  background-color: #c82333;
-}
-
-  

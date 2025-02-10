@@ -8,8 +8,6 @@
         <h2>Register Driver/Conductor</h2>
         <form id="driverForm">
             {% csrf_token %}
-            <label>User ID:</label>
-            <input type="text" id="userID" required>
             
             <label>Driver ID:</label>
             <input type="text" id="driverID" name="driverID" required>
@@ -38,25 +36,6 @@
             
             <button type="submit">Register</button>
         </form>
-
-        <h2>Registered Drivers/Conductors</h2>
-        <table>
-            <thead>
-                <tr>
-                    <th>User ID</th>
-                    <th>Driver ID</th>
-                    <th>Email</th>
-                    <th>First Name</th>
-                    <th>Last Name</th>
-                    <th>DOB</th>
-                    <th>Gender</th>
-                    <th>Phone</th>
-                </tr>
-            </thead>
-            <tbody id="driverTableBody">
-                <!-- Populated dynamically -->
-            </tbody>
-        </table>
     </div>
     
     <script src="{% static 'Js/Admin-add-driver.js' %}"></script>

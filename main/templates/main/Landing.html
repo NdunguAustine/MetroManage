@@ -1,0 +1,69 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MetroManage - Super Metro Fleet Management</title>
+    <link rel="stylesheet" href="{% static '/CSS/Landing.css' %}">
+    <script defer src="{% static '/Js/Landing.css' %}"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+</head>
+<body>
+
+    <!-- Navigation Bar -->
+    <header>
+        <div class="logo">MetroManage</div>
+        <nav>
+            <ul>
+                <li><a href="#">Home</a></li>
+                <li><a href="#">About</a></li>
+                <li><a href="#">Services</a></li>
+                <li><a href="http://127.0.0.1:8000/user/login" class="login-btn">Login</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="hero-content">
+            <h1>Efficient Fleet Management for Super Metro</h1>
+            <p>Manage your buses, routes, drivers, and payments in one secure platform.</p>
+            <a href="login.html" class="btn">Get Started</a>
+        </div>
+    </section>
+
+    <!-- Features Section -->
+    <section class="features">
+        <h2>Why Choose MetroManage?</h2>
+        <div class="features-container">
+            <div class="feature">
+                <i class="fa-solid fa-bus"></i>
+                <h3>Fleet Oversight</h3>
+                <p>Monitor and manage your entire fleet seamlessly.</p>
+            </div>
+            <div class="feature">
+                <i class="fa-solid fa-route"></i>
+                <h3>Route Management</h3>
+                <p>Plan, assign, and adjust bus routes efficiently.</p>
+            </div>
+            <div class="feature">
+                <i class="fa-solid fa-user-tie"></i>
+                <h3>Driver Management</h3>
+                <p>Assign, monitor, and manage your drivers with ease.</p>
+            </div>
+            <div class="feature">
+                <i class="fa-solid fa-money-bill-wave"></i>
+                <h3>Payment Processing</h3>
+                <p>Manage payments, fares, and financial reports effectively.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <p>&copy; 2025 MetroManage - Super Metro. All Rights Reserved.</p>
+    </footer>
+
+</body>
+</html>

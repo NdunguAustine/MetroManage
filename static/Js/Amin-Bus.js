@@ -1,24 +1,58 @@
+document.addEventListener("DOMContentLoaded", function () {
+  const busTableBody = document.getElementById("busTableBody");
+  const prevBtn = document.getElementById("prevPage");
+  const nextBtn = document.getElementById("nextPage");
 
+  let currentPage = 1;
+  const rowsPerPage = 5;
 
-document.getElementById('bus-form').addEventListener('submit', function (e) {
-    e.preventDefault();
-    const reg = document.getElementById('bus-reg').value;
-    const status = document.getElementById('bus-status').value;
-    addOrUpdateBus(reg, status);
+  // Fetch bus data from the backend API (Django)
+  function fetchBusData() {
+      fetch(`/api/buses/?page=${currentPage}`)
+          .then(response => response.json())
+          .then(data => {
+              renderTable(data.results);
+              updatePagination(data.previous, data.next);
+          })
+          .catch(error => console.error("Error fetching bus data:", error));
+  }
+
+  // Render table rows dynamically
+  function renderTable(buses) {
+      busTableBody.innerHTML = "";
+      buses.forEach(bus => {
+          const row = `
+              <tr>
+                  <td>${bus.busID}</td>
+                  <td>${bus.license_plate}</td>
+                  <td>${bus.capacity}</td>
+                  <td>${bus.route}</td>
+                  <td>${bus.status}</td>
+              </tr>
+          `;
+          busTableBody.innerHTML += row;
+      });
+  }
+
+  // Update pagination buttons
+  function updatePagination(prev, next) {
+      prevBtn.disabled = !prev;
+      nextBtn.disabled = !next;
+  }
+
+  // Event Listeners for Pagination
+  prevBtn.addEventListener("click", () => {
+      if (currentPage > 1) {
+          currentPage--;
+          fetchBusData();
+      }
   });
-  
-  function addOrUpdateBus(reg, status) {
-    const busList = document.getElementById('bus-list').querySelector('tbody');
-    let row = [...busList.rows].find(row => row.cells[0].textContent === reg);
-    if (row) {
-      row.cells[1].textContent = status;
-    } else {
-      row = busList.insertRow();
-      row.innerHTML = `<td>${reg}</td><td>${status}</td><td><button onclick="deleteBus(this)">Delete</button></td>`;
-    }
-  }
-  
-  function deleteBus(button) {
-    button.closest('tr').remove();
-  }
-  
+
+  nextBtn.addEventListener("click", () => {
+      currentPage++;
+      fetchBusData();
+  });
+
+  // Initial Fetch
+  fetchBusData();
+});

@@ -158,4 +158,10 @@ def user_login_view(request):
     return render(request, "main/login.html", {})
 
 def admin_addDriver_view(request):
-    return render(request,"main/Admin-add-driver.html")
+    return render(request,"main/Admin-add-driver.html", {})
+
+def admin_addBus_view(request):
+    return render(request,"main/Admin-add-bus.html", {})
+
+def user_landing_view(request):
+    return render(request,"main/Landing.html", {})
