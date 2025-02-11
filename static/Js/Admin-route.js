@@ -1,36 +1,51 @@
-document.getElementById('route-form').addEventListener('submit', function (e) {
-  e.preventDefault();
-  
-  const start = document.getElementById('route-start').value;
-  const end = document.getElementById('route-end').value;
-  const stops = document.getElementById('route-stops').value;
-  
-  const formData = new FormData(this);
+$(document).ready(function () {
+    // Fetch existing routes and populate table on page load
+    $("#route-form").submit(function (e) {
+        e.preventDefault();
+        const start = document.getElementById('route-start').value;
+        const end = document.getElementById('route-end').value;
+        const name = document.getElementById('route-name').value;
+        
+        const formData = new FormData(this);
+        $('#modal-loading').modal('show');
 
-  fetch("/admin/routes", {
-      method: "POST",
-      body: formData
-  })
-  .then(response => {
-      if (!response.ok) {
-          throw new Error("Server error");
-      }
-      return response.json();
-  })
-  .then(data => {
-      console.log(data);
+        fetch("/admin/routes", {
+            method: "POST",
+            body: formData
+        })
+        .then(response => {
+            $('#modal-loading').modal('hide');
+            
+            if (!response.ok) {
+                if(response.status == 402){
+                    alert("Route already exists");
+                }
+                throw new Error("Server error! Please try again later.");
+            }
+            return response.json();
+        })
+        .then(data => {
+            console.log(data);
 
-      const message = data.message;
-      const status = data.status;
-      alert(message);
+            const message = data.message;
+            const status = data.status;
+            
+        
+            this.reset();
 
-      // Reset the form
-      this.reset();
+            // Update the table dynamically
+            addOrUpdateRoute(data.route_id, start, end, name);
+        })
+        .catch(error => {
+            $('#modal-loading').modal('hide');
+            console.error("Error:", error)
+        }).finally(() => {
+            setTimeout(function(){
+                $('#modal-loading').modal('hide');
+            }, 1000);
+        });
+    });
 
-      // Update the table dynamically
-      addOrUpdateRoute(data.route_id, start, end, stops);
-  })
-  .catch(error => console.error("Error:", error));
 });
 
 // Function to dynamically add or update a route in the table
@@ -60,31 +75,31 @@ function addOrUpdateRoute(routeID, start, end, stops) {
 }
 
 // Function to delete a route from the table and database
-function deleteRoute(routeID, button) {
-  if (confirm("Are you sure you want to delete this route?")) {
-      fetch(`/admin/routes/${routeID}`, { method: "DELETE" })
-      .then(response => {
-          if (!response.ok) {
-              throw new Error("Error deleting route");
-          }
-          return response.json();
-      })
-      .then(data => {
-          alert(data.message);
-          button.closest('tr').remove();
-      })
-      .catch(error => console.error("Error:", error));
-  }
-}
+// function deleteRoute(routeID, button) {
+//   if (confirm("Are you sure you want to delete this route?")) {
+//       fetch(`/admin/routes/${routeID}`, { method: "DELETE" })
+//       .then(response => {
+//           if (!response.ok) {
+//               throw new Error("Error deleting route");
+//           }
+//           return response.json();
+//       })
+//       .then(data => {
+//           alert(data.message);
+//           button.closest('tr').remove();
+//       })
+//       .catch(error => console.error("Error:", error));
+//   }
+// }
 
-// Fetch existing routes and populate table on page load
-document.addEventListener("DOMContentLoaded", function () {
-  fetch("/admin/routes")
-      .then(response => response.json())
-      .then(data => {
-          data.routes.forEach(route => {
-              addOrUpdateRoute(route.id, route.start, route.end, route.stops);
-          });
-      })
-      .catch(error => console.error("Error fetching routes:", error));
-});
+// // Fetch existing routes and populate table on page load
+// document.addEventListener("DOMContentLoaded", function () {
+//   fetch("/admin/routes")
+//       .then(response => response.json())
+//       .then(data => {
+//           data.routes.forEach(route => {
+//               addOrUpdateRoute(route.id, route.start, route.end, route.stops);
+//           });
+//       })
+//       .catch(error => console.error("Error fetching routes:", error));
+// });

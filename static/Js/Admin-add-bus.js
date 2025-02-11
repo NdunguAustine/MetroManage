@@ -12,7 +12,7 @@ document.addEventListener("DOMContentLoaded", function () {
             status: document.getElementById("status").value
         };
 
-        fetch("/api/buses/", {
+        fetch("admin/addBus", {
             method: "POST",
             headers: {
                 "Content-Type": "application/json",
@@ -22,11 +22,13 @@ document.addEventListener("DOMContentLoaded", function () {
         })
         .then(response => response.json())
         .then(data => {
-            if (data.success) {
+            const message = data.message;
+            const status = data.status;
+            if (status === 200) {
                 alert("Bus added successfully!");
                 form.reset();
             } else {
-                alert("Error: " + data.message);
+                alert("Error: " + message);
             }
         })
         .catch(error => console.error("Error adding bus:", error));

@@ -19,8 +19,8 @@ class DriverConductor(models.Model):
     
 class  BusDetails(models.Model):
     busID= models.CharField(max_length=50, unique=True, blank=False, null=False)
-    fleetNumber= models.CharField(max_length=20, blank=False, null=False)
-    numberPlate= models.CharField(max_length=20, blank=False, null=False)
+    fleetNumber= models.CharField(max_length=20, blank=False, null=False, unique=True)
+    numberPlate= models.CharField(max_length=20, blank=False, null=False, unique=True)
     driver= models.ForeignKey(DriverConductor, on_delete=models.CASCADE, related_name="bus_driver", blank=True, null=True)
 
     def __str__(self):
@@ -28,7 +28,7 @@ class  BusDetails(models.Model):
     
 class RouteDetails(models.Model):
     routeID= models.CharField(max_length=50, unique=True, blank=False, null= False)
-    routeName= models.CharField(max_length=30, blank=False, null=False)
+    routeName= models.CharField(max_length=30, blank=False, null=False, unique=True)
     startRoute= models.CharField(max_length=50, blank=False, null=False)
     destination= models.CharField(max_length=50, blank=False, null=False)
 

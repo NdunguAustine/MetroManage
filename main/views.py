@@ -7,12 +7,32 @@ from .models import DriverConductor
 from .generate_hash import Generator
 from django.contrib.auth.models import Group
 from django.core.paginator import Paginator
-from .models import DriverConductor, RouteDetails
+from .models import DriverConductor, RouteDetails, BusDetails, PaymentDetails
 from .forms import DriverConductorForm
+import json
 
 # Create your views here.
 def index(request):
-    return render(request,"main/index.html", {})
+    user = request.user
+    try:
+        if user.is_authenticated and is_admin(user):
+            if request.method == "GET":
+                drivers = DriverConductor.objects.all()
+                buses = BusDetails.objects.all()
+                routes = RouteDetails.objects.all()
+                payments = PaymentDetails.objects.all()
+                return render(request,"main/index.html", {
+                    "drivers": drivers.count(), 
+                    "buses": buses.count(), 
+                    "routes": routes.count(), 
+                    "payments": payments.count()
+                    })  
+            return render(request,"main/index.html", {})
+        else:
+            return redirect("/user/login")
+    except Exception as e:
+        print(f"Error: {e}")
+        return redirect("/user/login")
 
 def admin_bus_view(request):
     return render(request,"main/Admin-Bus.html", {})
@@ -115,19 +135,28 @@ def admin_route_view(request):
             }, status=400)
         
         try:
+            route_exist = RouteDetails.objects.filter(startRoute=start, destination=destination).exists()
+            if route_exist:
+                return JsonResponse({
+                    "message":"Route already exists.",
+                    "status":402
+                }, status=402)
+            
             new_route = RouteDetails.objects.create(
                 routeID=Generator(),
-                routeName="Default Name",
+                routeName=name,
                 startRoute=start,
                 destination=destination
             )
             new_route.save()
             return JsonResponse({
                 "message":"Route details added!",
-                "status":200
+                "status":200,
+                "route_id":str(new_route.routeID)
             },status=200)
         
         except Exception as e:
+            print(f"Error: {e}")
             return JsonResponse({
                 "message":f"Error: {e}",
                 "status":500
@@ -161,7 +190,42 @@ def admin_addDriver_view(request):
     return render(request,"main/Admin-add-driver.html", {})
 
 def admin_addBus_view(request):
-    return render(request,"main/Admin-add-bus.html", {})
+    if request.method == "GET":
+        routes = []
+        for route in RouteDetails.objects.all():
+            routes.append({
+                "route_id":route.routeID,
+                "route_name":route.routeName
+            })
+        return render(request,"main/Admin-add-bus.html", {"routes":routes})
+    elif request.method == "POST":
+        body = request.body
+        raw_body = json.loads(body)
+
+        fleetNumber = raw_body.get("fleetNumber", None)
+        numberPlate = raw_body.get("license_plate", None)
+        capacity = raw_body.get("capacity", None)
+        driver = raw_body.get("driver", None)
+        route = raw_body.get("route", None)
+
+        if not all in [fleetNumber, numberPlate, capacity, driver, route]:
+            return JsonResponse({
+                "message":"All fields required.",
+                "status":400
+            }, status=400)
+        
+        new_bus = BusDetails.objects.create(
+            busID=Generator(),
+            fleetNumber=fleetNumber,
+            numberPlate=numberPlate
+        )
+        new_bus.save()
+
+    else:
+        return JsonResponse({
+            "message":"Method not allowed",
+            "status":405
+        }, status=405)
 
 def user_landing_view(request):
     return render(request,"main/Landing.html", {})

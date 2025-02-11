@@ -19,7 +19,12 @@
         <input type="number" id="capacity" name="capacity" required>
 
         <label for="route">Route:</label>
-        <input type="text" id="route" name="route" required>
+        <!-- <input type="text" id="route" name="route" required> -->
+        <select id="route" name="route" required>
+            {% for route in routes %}
+                <option value="{{ route.route_id }}">{{ route.route_name }}</option>
+            {% endfor %}
+        </select>
 
         <label for="status">Status:</label>
         <select id="status" name="status" required>
@@ -33,5 +38,5 @@
     </form>
 </div>
 
-<script src="{% static 'JS/add_bus.js' %}"></script>
+<script src="{% static 'JS/Admin-add-bus.js' %}"></script>
 {% endblock %}
