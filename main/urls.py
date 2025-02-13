@@ -17,7 +17,9 @@ urlpatterns = [
     path("user/login", view=views.user_login_view, name="user_login_view"),
     path("admin/addDriver", view=views.admin_addDriver_view, name="admin_addDriver_view"),
     path("admin/addBus", view=views.admin_addBus_view, name="admin_addBus_view"),
-    path("user/landing", view=views.user_landing_view, name="user_landing_view")
+    path("user/landing", view=views.user_landing_view, name="user_landing_view"),
+    path("user/ProfilePage", view=views.user_profile_page_view, name="user_profile_page_view"),
+    path("user/EditProfile", view=views.user_edit_profile_view, name="user_edit_profile_view")
 
 ]
 

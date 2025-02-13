@@ -229,3 +229,9 @@ def admin_addBus_view(request):
 
 def user_landing_view(request):
     return render(request,"main/Landing.html", {})
+
+def user_profile_page_view(request):
+    return render(request,"main/User-Profile-Page.html", {})
+
+def user_edit_profile_view(request):
+    return render(request,"main/User-Edit-Profile.html", {})

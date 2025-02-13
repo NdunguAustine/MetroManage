@@ -1,0 +1,49 @@
+{% extends 'main/UserBase.html' %}
+{% load static %}
+{% block title %}Edit Profile{% endblock %}
+
+{% block content %}
+<link rel="stylesheet" href="{% static 'CSS/User-Edit-Profile.css' %}">
+    <div class="container">
+        <h1>Edit Profile</h1>
+        <form id="edit-profile-form">
+            <div class="form-group">
+                <label for="driverID">Driver ID:</label>
+                <input type="text" id="driverID" name="driverID" required>
+            </div>
+            <div class="form-group">
+                <label for="email">Email:</label>
+                <input type="email" id="email" name="email" required>
+            </div>
+            <div class="form-group">
+                <label for="first_name">First Name:</label>
+                <input type="text" id="first_name" name="first_name" required>
+            </div>
+            <div class="form-group">
+                <label for="last_name">Last Name:</label>
+                <input type="text" id="last_name" name="last_name" required>
+            </div>
+            <div class="form-group">
+                <label for="date_of_birth">Date of Birth:</label>
+                <input type="date" id="date_of_birth" name="date_of_birth" required>
+            </div>
+            <div class="form-group">
+                <label for="gender">Gender:</label>
+                <select id="gender" name="gender" required>
+                    <option value="Male">Male</option>
+                    <option value="Female">Female</option>
+                    <option value="Other">Other</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="phone">Phone:</label>
+                <input type="tel" id="phone" name="phone" required>
+            </div>
+            <div class="form-actions">
+                <button type="submit">Save Changes</button>
+                <button type="button" id="cancel-btn">Cancel</button>
+            </div>
+        </form>
+    </div>
+    <script src="{% static 'Js/User-Edit-Profile.js' %}"></script>
+{% endblock %}
