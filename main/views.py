@@ -1,7 +1,7 @@
 from django.shortcuts import render, redirect
 from django.contrib.auth.models import User
 from auth0.utils import is_admin, create_user
-from django.http import JsonResponse
+from django.http import JsonResponse, HttpResponseForbidden, HttpResponse
 from django.contrib.auth.decorators import login_required
 from .models import DriverConductor
 from .generate_hash import Generator
@@ -10,24 +10,28 @@ from django.core.paginator import Paginator
 from .models import DriverConductor, RouteDetails, BusDetails, PaymentDetails
 from .forms import DriverConductorForm
 import json
+from . import database
 
 # Create your views here.
 def index(request):
     user = request.user
     try:
-        if user.is_authenticated and is_admin(user):
-            if request.method == "GET":
-                drivers = DriverConductor.objects.all()
-                buses = BusDetails.objects.all()
-                routes = RouteDetails.objects.all()
-                payments = PaymentDetails.objects.all()
-                return render(request,"main/index.html", {
-                    "drivers": drivers.count(), 
-                    "buses": buses.count(), 
-                    "routes": routes.count(), 
-                    "payments": payments.count()
-                    })  
-            return render(request,"main/index.html", {})
+        if user.is_authenticated:
+            if is_admin(user):
+                if request.method == "GET":
+                    drivers = DriverConductor.objects.all()
+                    buses = BusDetails.objects.all()
+                    routes = RouteDetails.objects.all()
+                    payments = PaymentDetails.objects.all()
+                    return render(request,"main/index.html", {
+                        "drivers": drivers.count(), 
+                        "buses": buses.count(), 
+                        "routes": routes.count(), 
+                        "payments": payments.count()
+                        })  
+                return render(request,"main/index.html", {})
+            else:
+                return HttpResponseForbidden("Not allowed to access this services")
         else:
             return redirect("/user/login")
     except Exception as e:
@@ -230,8 +234,62 @@ def admin_addBus_view(request):
 def user_landing_view(request):
     return render(request,"main/Landing.html", {})
 
+@login_required(login_url='/user/login')
 def user_profile_page_view(request):
-    return render(request,"main/User-Profile-Page.html", {})
+    user = request.user
 
+    try:
+        is_sucess, response = database.get_drive_conductor(user)
+
+        if is_sucess:
+            return render(request, "main/User-Profile-Page.html", {"driver": response}, status=200)
+        else:
+            return HttpResponse(response["message"])
+    except Exception as e:
+        return HttpResponse(f"Something went wrong: {str(e)}")
+    
+
+@login_required(login_url='/user/login')
 def user_edit_profile_view(request):
-    return render(request,"main/User-Edit-Profile.html", {})
+    user = request.user
+
+    try:
+        if request.method != "POST":
+            is_sucess, response = database.get_drive_conductor(user)
+
+            if is_sucess:
+                return render(request, "main/User-Edit-Profile.html", {"driver": response}, status=200)
+            else:
+                return HttpResponse(response["message"])
+        else:
+            email = request.POST.get("email")
+            first_name = request.POST.get("first_name")
+            last_name = request.POST.get("last_name")
+            date_of_birth = request.POST.get("date_of_birth")
+            gender = request.POST.get("gender")
+            phone = request.POST.get("phone")
+
+            # Check if any field is missing or empty
+            if not all([email, first_name, last_name, date_of_birth, gender, phone]):
+                print("All fields required!")
+                return JsonResponse({
+                    "message": "All fields required!",
+                    "status": 400
+                }, status=400)
+            
+            is_sucess, response = database.update_driver_conductor({
+                "email":email,
+                "first_name":first_name,
+                "last_name":last_name,
+                "date_of_birth":date_of_birth,
+                "gender":gender,
+                "phone": phone,
+                "user": user
+            })
+
+            return JsonResponse(response, status=response["status"])
+            
+            
+    except Exception as e:
+        print(f"Error: {e}")
+        return HttpResponse(f"Something went wrong: {str(e)}")

@@ -7,37 +7,38 @@
     <div class="container">
         <h1>Edit Profile</h1>
         <form id="edit-profile-form">
+            {% csrf_token %}
             <div class="form-group">
                 <label for="driverID">Driver ID:</label>
-                <input type="text" id="driverID" name="driverID" required>
+                <input type="text" id="driverID" name="driverID" value="{{ driver.driverID }}" required>
             </div>
             <div class="form-group">
                 <label for="email">Email:</label>
-                <input type="email" id="email" name="email" required>
+                <input type="email" id="email" name="email" value="{{ driver.email }}" required>
             </div>
             <div class="form-group">
                 <label for="first_name">First Name:</label>
-                <input type="text" id="first_name" name="first_name" required>
+                <input type="text" id="first_name" name="first_name" value="{{ driver.first_name }}" required>
             </div>
             <div class="form-group">
                 <label for="last_name">Last Name:</label>
-                <input type="text" id="last_name" name="last_name" required>
+                <input type="text" id="last_name" name="last_name"  value="{{ driver.last_name }}">
             </div>
             <div class="form-group">
                 <label for="date_of_birth">Date of Birth:</label>
-                <input type="date" id="date_of_birth" name="date_of_birth" required>
+                <input type="date" id="date_of_birth" name="date_of_birth" value="{{ driver.date_of_birth }}" required>
             </div>
             <div class="form-group">
                 <label for="gender">Gender:</label>
                 <select id="gender" name="gender" required>
-                    <option value="Male">Male</option>
-                    <option value="Female">Female</option>
-                    <option value="Other">Other</option>
+                    <option value="Male" {% if driver.gender == "male" %} selected {% endif %}>Male</option>
+                    <option value="Female" {% if driver.gender == "female" %} selected {% endif %}>Female</option>
+                    <option value="Other" {% if driver.gender == "other" %} selected {% endif %}>Other</option>
                 </select>
             </div>
             <div class="form-group">
                 <label for="phone">Phone:</label>
-                <input type="tel" id="phone" name="phone" required>
+                <input type="tel" id="phone" name="phone" value="{{ driver.phone }}" required>
             </div>
             <div class="form-actions">
                 <button type="submit">Save Changes</button>

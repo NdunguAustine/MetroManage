@@ -6,7 +6,6 @@ from django.contrib.auth.models import User
 class DriverConductor(models.Model):
     userID = models.CharField(max_length=50,unique=True, blank=False, null=False)
     driverID = models.CharField(max_length=50, unique=True, blank=False, null=False)
-    image = models.ImageField(upload_to="Images/", blank=False, null=False)
     email =  models.CharField(max_length=50, blank=False, null=False)
     first_name = models.CharField(max_length=30, blank=False, null=False)
     last_name = models.CharField(max_length=30, blank=False, null=False)

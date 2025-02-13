@@ -1,7 +1,6 @@
 document.getElementById("driverForm").addEventListener("submit", function(event) {
     event.preventDefault();
-  
-    let userID = document.getElementById("userID").value;
+    
     let driverID = document.getElementById("driverID").value;
     let email = document.getElementById("email").value;
     let first_name = document.getElementById("first_name").value;
