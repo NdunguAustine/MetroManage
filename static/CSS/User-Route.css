@@ -1,87 +1,66 @@
- 
-  /* Container */
-  .route-management-container {
-    max-width: 1200px;
-    margin: 30px auto;
-    padding: 20px;
-    background: #fff;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    border-radius: 8px;
-  }
-  
-  /* Heading */
-  .route-management-container h1 {
-    text-align: center;
-    margin-bottom: 20px;
-    font-size: 1.8rem;
-    color: #4CAF50;
-  }
-  
-  /* Table Styling */
-  #route-table {
-    width: 100%;
-    border-collapse: collapse;
-    margin-top: 20px;
-    background-color: #ffffff;
-    font-size: 1rem;
-    color: #333;
-  }
-  
-  #route-table th {
-    background-color: #4CAF50;
-    color: white;
-    text-align: left;
-    padding: 10px 15px;
-    text-transform: uppercase;
-    border-bottom: 2px solid #ddd;
-  }
-  
-  #route-table td {
-    padding: 10px 15px;
-    border-bottom: 1px solid #ddd;
-    text-align: left;
-  }
-  
-  #route-table tbody tr:nth-child(even) {
-    background-color: #f9f9f9;
-  }
-  
-  #route-table tbody tr:nth-child(odd) {
-    background-color: #ffffff;
-  }
-  
-  #route-table tbody tr:hover {
-    background-color: #f1f1f1;
-    cursor: pointer;
-  }
-  
-  /* Button Styling */
-  .route-actions .btn {
-    display: inline-block;
-    padding: 10px 20px;
-    background-color: #4CAF50;
-    color: white;
-    border: none;
-    border-radius: 5px;
-    font-size: 1rem;
-    cursor: pointer;
-    text-transform: uppercase;
-    margin-top: 20px;
-  }
-  
-  .route-actions .btn:hover {
-    background-color: #45a049;
-  }
-  
-  /* Responsive Design */
-  @media (max-width: 768px) {
-    #route-table {
-      font-size: 0.9rem;
-    }
-  
-    #route-table th, 
-    #route-table td {
-      padding: 8px 10px;
-    }
-  }
-  
+
+.container {
+  width: 60%;
+  background: #fff;
+  padding: 20px;
+  margin: auto;
+  border-radius: 8px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+h2, h3 {
+  text-align: center;
+  color: #007bff;
+}
+
+.route-info {
+  background: #e3f2fd;
+  padding: 10px;
+  border-radius: 5px;
+  margin-bottom: 20px;
+}
+
+.update-section, .pending-section {
+  margin-top: 20px;
+}
+
+form {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+input, textarea, button {
+  padding: 10px;
+  font-size: 16px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+}
+
+button {
+  background-color: #007bff;
+  color: white;
+  border: none;
+  cursor: pointer;
+}
+
+button:hover {
+  background-color: #0056b3;
+}
+
+table {
+  width: 100%;
+  margin-top: 20px;
+  border-collapse: collapse;
+}
+
+th, td {
+  padding: 10px;
+  border: 1px solid #ddd;
+  text-align: center;
+}
+
+th {
+  background-color: #007bff;
+  color: white;
+}

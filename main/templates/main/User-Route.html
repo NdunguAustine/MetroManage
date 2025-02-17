@@ -4,31 +4,44 @@
 
 {% block content %}
 <link rel="stylesheet" href="{% static 'CSS/User-Route.css' %}">
-              <div class="route-management-container">
-                <h1>Route Management</h1>
-            
-                <!-- Route Table -->
-                <table id="route-table">
-                  <thead>
-                    <tr>
-                      <th>Route ID</th>
-                      <th>Start Location</th>
-                      <th>Destination</th>
-                      <th>Departure Time</th>
-                      <th>Arrival Time</th>
-                      <th>Status</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <!-- Dynamic Data Rows -->
-                  </tbody>
-                </table>
-            
-                <!-- Route Actions -->
-                <div class="route-actions">
-                  <button id="refresh-btn" class="btn">Refresh Routes</button>
-                </div>
-              </div>
-            
-              <script src="{% static '/Js/User-Route.js' %}"></script>
+<div class="container">
+  <h2>Current Assigned Route</h2>
+
+  <!-- Display Assigned Route -->
+  <div class="route-info">
+      <p><strong>Current Route:</strong> <span id="currentRoute">Main Street - Downtown</span></p>
+  </div>
+
+  <!-- Route Update Request Form -->
+  <div class="update-section">
+      <h3>Request Route Update</h3>
+      <form id="routeUpdateForm">
+          <label for="newRoute">Enter New Route:</label>
+          <input type="text" id="newRoute" name="newRoute" placeholder="Enter new route" required>
+
+          <label for="reason">Reason for Change:</label>
+          <textarea id="reason" name="reason" placeholder="Provide justification" required></textarea>
+
+          <button type="submit">Submit Request</button>
+      </form>
+  </div>
+
+  <!-- Pending Requests Table -->
+  <div class="pending-section">
+      <h3>Pending Requests</h3>
+      <table>
+          <thead>
+              <tr>
+                  <th>Requested Route</th>
+                  <th>Reason</th>
+                  <th>Status</th>
+              </tr>
+          </thead>
+          <tbody id="pendingRequests">
+              <!-- Requests will be populated dynamically -->
+          </tbody>
+      </table>
+  </div>
+</div>
+<script src="{% static '/Js/User-Route.js' %}"></script>
 {% endblock %}

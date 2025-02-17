@@ -50,3 +50,21 @@ class RouteBus(models.Model):
 
     def __str__(self):
         return self.route.routeName
+
+class RouteChangeRequest(models.Model):
+    STATUS_CHOICES = [
+        ('Pending', 'Pending'),
+        ('Approved', 'Approved'),
+        ('Rejected', 'Rejected'),
+    ]
+
+    driver = models.ForeignKey(DriverConductor, on_delete=models.CASCADE, related_name= "route_change") 
+    current_route = models.CharField(max_length=100)
+    requested_route = models.CharField(max_length=100)
+    reason = models.TextField()
+    status = models.CharField(max_length=10, choices=STATUS_CHOICES, default='Pending')
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
+
+    def __str__(self):
+        return f"{self.driver.username} - {self.requested_route} ({self.status})"
