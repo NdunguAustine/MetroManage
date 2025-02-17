@@ -39,7 +39,21 @@ def index(request):
         return redirect("/user/login")
 
 def admin_bus_view(request):
-    return render(request,"main/Admin-Bus.html", {})
+    try:
+        if request.method == "GET":
+            buses = []
+            for bus in BusDetails.objects.all():
+                buses.append({
+                    "bus_id": bus.busID,
+                    "fleet_number": bus.fleetNumber,
+                    "licence_plate": bus.numberPlate,
+                    "route_name": bus.route.routeName if bus.route else "Not assigned",
+                    "driver_name": f"{bus.driver.first_name} {bus.driver.last_name}"
+                })          
+            return render(request,"main/Admin-Bus.html", {"buses":buses})
+    except Exception as e:
+        print(f"Error: {e}")
+        return HttpResponse(f"Error: {e}")
 
 @login_required(login_url='/user/login')
 def admin_driver_view(request):
@@ -196,32 +210,50 @@ def admin_addDriver_view(request):
 def admin_addBus_view(request):
     if request.method == "GET":
         routes = []
+        drivers = []
         for route in RouteDetails.objects.all():
             routes.append({
                 "route_id":route.routeID,
                 "route_name":route.routeName
             })
-        return render(request,"main/Admin-add-bus.html", {"routes":routes})
+        for driver in DriverConductor.objects.all():
+            drivers.append({
+                "driver_id":driver.driverID,
+                "driver_name":f"{driver.first_name} {driver.last_name}"
+            })
+    
+    
+        return render(request,"main/Admin-add-bus.html", {"routes":routes, "drivers":drivers})
     elif request.method == "POST":
-        body = request.body
-        raw_body = json.loads(body)
 
-        fleetNumber = raw_body.get("fleetNumber", None)
-        numberPlate = raw_body.get("license_plate", None)
-        capacity = raw_body.get("capacity", None)
-        driver = raw_body.get("driver", None)
-        route = raw_body.get("route", None)
+        fleetNumber = request.POST.get("fleetNo", None)
+        numberPlate = request.POST.get("licensePlate", None)
+        capacity = request.POST.get("capacity", None)
+        driver = request.POST.get("driver", None)
+        route = request.POST.get("route", None)
 
-        if not all in [fleetNumber, numberPlate, capacity, driver, route]:
+        print(f"Data {request.POST}")
+
+        if not all in ([fleetNumber, numberPlate, capacity, driver, route]):
             return JsonResponse({
                 "message":"All fields required.",
                 "status":400
             }, status=400)
         
+        driver_conductor = DriverConductor.objects.filter(driverID=driver).first()
+        db_route = RouteDetails.objects.filter(routeID=route).first()
+
+        if driver_conductor is None or db_route is None:
+            return JsonResponse({
+                "message":"all fields required(driver and route)",
+                "status":400
+            },status=400)
         new_bus = BusDetails.objects.create(
             busID=Generator(),
             fleetNumber=fleetNumber,
-            numberPlate=numberPlate
+            numberPlate=numberPlate,
+            route=db_route,
+            driver=driver_conductor
         )
         new_bus.save()
 

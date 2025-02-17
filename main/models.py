@@ -17,14 +17,7 @@ class DriverConductor(models.Model):
     def __str__(self):
         return self.driverID
     
-class  BusDetails(models.Model):
-    busID= models.CharField(max_length=50, unique=True, blank=False, null=False)
-    fleetNumber= models.CharField(max_length=20, blank=False, null=False, unique=True)
-    numberPlate= models.CharField(max_length=20, blank=False, null=False, unique=True)
-    driver= models.ForeignKey(DriverConductor, on_delete=models.CASCADE, related_name="bus_driver", blank=True, null=True)
 
-    def __str__(self):
-        return self.numberPlate
     
 class RouteDetails(models.Model):
     routeID= models.CharField(max_length=50, unique=True, blank=False, null= False)
@@ -35,6 +28,15 @@ class RouteDetails(models.Model):
     def __str__(self):
         return self.routeName
     
+class  BusDetails(models.Model):
+    busID= models.CharField(max_length=50, unique=True, blank=False, null=False)
+    fleetNumber= models.CharField(max_length=20, blank=False, null=False, unique=True)
+    numberPlate= models.CharField(max_length=20, blank=False, null=False, unique=True)
+    driver= models.ForeignKey(DriverConductor, on_delete=models.CASCADE, related_name="bus_driver", blank=True, null=True)
+    route = models.ForeignKey(RouteDetails, on_delete=models.CASCADE, related_name="bus_route", null=True, blank=True)
+
+    def __str__(self):
+        return self.numberPlate
 class PaymentDetails(models.Model):
     paymentID= models.CharField(max_length=50, unique=True, blank=False, null=False)
     bus= models.ForeignKey(BusDetails, on_delete=models.CASCADE, related_name="bus_payment", blank=False, null=False)
@@ -44,12 +46,12 @@ class PaymentDetails(models.Model):
     def __str__(self):
         return self.bus.numberPlate
     
-class RouteBus(models.Model):
-    route= models.ForeignKey(RouteDetails, on_delete=models.CASCADE, related_name="bus_route", blank=False, null=False)
-    buses= models.JSONField()
+# class RouteBus(models.Model):
+#     route= models.ForeignKey(RouteDetails, on_delete=models.CASCADE, related_name="bus_route", blank=False, null=False)
+#     buses= models.JSONField()
 
-    def __str__(self):
-        return self.route.routeName
+#     def __str__(self):
+#         return self.route.routeName
 
 class RouteChangeRequest(models.Model):
     STATUS_CHOICES = [

@@ -13,7 +13,7 @@
         <input type="text" id="busID" name="busID" required>
 
         <label for="fleetNo">Fleet Number:</label>
-        <input type="text" id="fleetNo name="fleetNo" required>
+        <input type="text" id="fleetNo" name="fleetNo" required>
 
         <label for="licensePlate">License Plate:</label>
         <input type="text" id="licensePlate" name="licensePlate" required>
@@ -23,10 +23,9 @@
 
         <label for="driver">Assign Driver:</label>
         <select id="driver" name="driver" required>
-            <option value="A">A </option>
-            <option value="B">B</option>
-            <option value="K">K</option>
-            <option value="KAT">Kevin</option>
+            {% for driver in drivers %}
+                <option value="{{ driver.driver_id }}">{{ driver.driver_name }}</option>
+            {% endfor %}
         </select>
 
         <label for="route">Route:</label>

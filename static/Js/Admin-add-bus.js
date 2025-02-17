@@ -4,21 +4,16 @@ document.addEventListener("DOMContentLoaded", function () {
     form.addEventListener("submit", function (event) {
         event.preventDefault(); // Prevent form from reloading the page
 
-        const busData = {
-            busID: document.getElementById("busID").value.trim(),
-            license_plate: document.getElementById("licensePlate").value.trim(),
-            capacity: parseInt(document.getElementById("capacity").value),
-            route: document.getElementById("route").value.trim(),
-            status: document.getElementById("status").value
-        };
+        const formData = new FormData(this);
+        
+        console.log("form data",formData)
 
-        fetch("admin/addBus", {
+        fetch("/admin/addBus", {
             method: "POST",
             headers: {
-                "Content-Type": "application/json",
                 "X-CSRFToken": getCSRFToken()
             },
-            body: JSON.stringify(busData)
+            body: formData
         })
         .then(response => response.json())
         .then(data => {

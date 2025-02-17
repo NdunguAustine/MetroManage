@@ -6,16 +6,8 @@ document.addEventListener("DOMContentLoaded", function () {
   let currentPage = 1;
   const rowsPerPage = 5;
 
-  // Fetch bus data from the backend API (Django)
-  function fetchBusData() {
-      fetch(`/api/buses/?page=${currentPage}`)
-          .then(response => response.json())
-          .then(data => {
-              renderTable(data.results);
-              updatePagination(data.previous, data.next);
-          })
-          .catch(error => console.error("Error fetching bus data:", error));
-  }
+    // Fetch Bus Data
+    
 
   // Render table rows dynamically
   function renderTable(buses) {
@@ -44,15 +36,15 @@ document.addEventListener("DOMContentLoaded", function () {
   prevBtn.addEventListener("click", () => {
       if (currentPage > 1) {
           currentPage--;
-          fetchBusData();
+          //fetchBusData();
       }
   });
 
   nextBtn.addEventListener("click", () => {
       currentPage++;
-      fetchBusData();
+      //fetchBusData();
   });
 
   // Initial Fetch
-  fetchBusData();
+  //fetchBusData();
 });
