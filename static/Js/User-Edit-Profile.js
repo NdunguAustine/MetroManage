@@ -36,6 +36,6 @@ document.addEventListener('DOMContentLoaded', function () {
     }
     // Handle cancel button click
     cancelBtn.addEventListener('click', function () {
-        window.location.href = 'profile.html'; // Redirect to the profile view page
+        window.location.href = 'User-Profile-Page.html'; // Redirect to the profile view page
     });
 });

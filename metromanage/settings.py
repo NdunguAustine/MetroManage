@@ -95,7 +95,7 @@ DATABASES = {
         'ENGINE': 'django.db.backends.mysql',
         'NAME': 'metromanage',  # The database name (from the URL)
         'USER': 'root',   # The username (from the URL)
-        'PASSWORD': '2000',  # The password (from the URL)
+        'PASSWORD': 'aq9agm11',  # The password (from the URL)
         'HOST': 'localhost',  # The host (from the URL)
         'PORT': '3306',  # The port (from the URL)
         # 'OPTIONS': {
