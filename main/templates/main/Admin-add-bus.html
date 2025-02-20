@@ -6,7 +6,7 @@
 <link rel="stylesheet" href="{% static 'CSS/Admin-add-bus.css' %}">
 <div class="container">
     <h2>Add a New Bus</h2>
-    <form id="addBusForm">
+    <form id="addBusForm" method="POST">
         {% csrf_token %}
         
         <label for="busID">Bus ID:</label>

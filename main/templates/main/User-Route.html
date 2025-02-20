@@ -15,7 +15,8 @@
   <!-- Route Update Request Form -->
   <div class="update-section">
       <h3>Request Route Update</h3>
-      <form id="routeUpdateForm">
+      <form id="routeUpdateForm" method="POST">
+        {% csrf_token %}
           <label for="newRoute">Enter New Route:</label>
           <input type="text" id="newRoute" name="newRoute" placeholder="Enter new route" required>
 

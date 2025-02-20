@@ -7,10 +7,11 @@ from .models import DriverConductor
 from .generate_hash import Generator
 from django.contrib.auth.models import Group
 from django.core.paginator import Paginator
-from .models import DriverConductor, RouteDetails, BusDetails, PaymentDetails
+from .models import DriverConductor, RouteDetails, BusDetails, PaymentDetails, RouteChangeRequest
 from .forms import DriverConductorForm
 import json
 from . import database
+from django.db import IntegrityError
 
 # Create your views here.
 def index(request):
@@ -38,6 +39,7 @@ def index(request):
         print(f"Error: {e}")
         return redirect("/user/login")
 
+@login_required(login_url='/user/login')
 def admin_bus_view(request):
     try:
         if request.method == "GET":
@@ -172,7 +174,11 @@ def admin_route_view(request):
                 "status":200,
                 "route_id":str(new_route.routeID)
             },status=200)
-        
+        except IntegrityError as e:
+            return JsonResponse({
+                "message":"Route already exists.",
+                "status":402
+            }, status=402)
         except Exception as e:
             print(f"Error: {e}")
             return JsonResponse({
@@ -195,12 +201,72 @@ def user_payments_view(request):
 def user_profile_view(request):
     return render(request,"main/User-Profile.html", {})
 
+@login_required(login_url='/user/login')
 def user_route_view(request):
-    return render(request,"main/User-Route.html", {})
+    user = request.user
+    if request.method == "POST":
+        try:
+            route = request.POST.get("newRoute", None)
+            reason = request.POST.get("reason", None)
 
+            print(f"Data: {route}, {reason}")
+
+            if not all([route, reason]):
+                return JsonResponse({
+                    "message":"All fields required.",
+                    "status":400
+                }, status=400)
+            
+            driver = DriverConductor.objects.filter(profile=user).first()
+
+            if driver:
+                route_change = RouteChangeRequest.objects.create(
+                    driver=driver,
+                    requested_route=route,
+                    reason=reason
+                )
+                route_change.save()
+                return JsonResponse({
+                    "message":"Route change request submitted.",
+                    "status":200
+                }, status=200)
+        
+        except Exception as e:
+            print(f"Error: {e}")
+            return JsonResponse({
+                "message":f"Error: {e}",
+                "status":500
+            }, status=500)
+    else:
+        return render(request,"main/User-Route.html", {})
+
+@login_required(login_url='/user/login')
 def user_dashboard_view(request):
-    return render(request, "main/User-Dashboard.html", {})
-
+    user = request.user
+    if user.is_authenticated:
+        try:
+            driver_bus = "Not assigned"
+            bus_router = "Not assigned"
+            driver = DriverConductor.objects.filter(profile=user).first()
+            if driver:
+                bus = BusDetails.objects.filter(driver=driver).first()
+                driver_bus = bus.fleetNumber
+                if bus:
+                    bus_router = bus.route.routeName
+                
+            return render(request, "main/User-Dashboard.html", {
+                "driver": driver,
+                "bus": driver_bus,
+                "route": bus_router
+            })
+        except Exception as e:
+            return JsonResponse({
+                "message":f"Error: {e}",
+                "status":500
+            }, status=500)
+    else:
+        return redirect("/user/login")
+        
 def user_login_view(request):
     return render(request, "main/login.html", {})
 
@@ -224,6 +290,7 @@ def admin_addBus_view(request):
     
     
         return render(request,"main/Admin-add-bus.html", {"routes":routes, "drivers":drivers})
+    
     elif request.method == "POST":
 
         fleetNumber = request.POST.get("fleetNo", None)
@@ -234,28 +301,44 @@ def admin_addBus_view(request):
 
         print(f"Data {request.POST}")
 
-        if not all in ([fleetNumber, numberPlate, capacity, driver, route]):
+        if not all([fleetNumber, numberPlate, capacity, driver, route]):
             return JsonResponse({
                 "message":"All fields required.",
                 "status":400
             }, status=400)
         
-        driver_conductor = DriverConductor.objects.filter(driverID=driver).first()
-        db_route = RouteDetails.objects.filter(routeID=route).first()
+        try:
+            driver_conductor = DriverConductor.objects.filter(driverID=driver).first()
+            db_route = RouteDetails.objects.filter(routeID=route).first()
 
-        if driver_conductor is None or db_route is None:
+            if driver_conductor is None or db_route is None:
+                return JsonResponse({
+                    "message":"all fields required(driver and route)",
+                    "status":400
+                },status=400)
+            new_bus = BusDetails.objects.create(
+                busID=Generator(),
+                fleetNumber=fleetNumber,
+                numberPlate=numberPlate,
+                route=db_route,
+                driver=driver_conductor
+            )
+            new_bus.save()
             return JsonResponse({
-                "message":"all fields required(driver and route)",
-                "status":400
-            },status=400)
-        new_bus = BusDetails.objects.create(
-            busID=Generator(),
-            fleetNumber=fleetNumber,
-            numberPlate=numberPlate,
-            route=db_route,
-            driver=driver_conductor
-        )
-        new_bus.save()
+                "message":"Bus added",
+                "status":200
+            }, status=200)
+        except IntegrityError as e:
+            return JsonResponse({
+                "message":"Fleet number or license plate already exists.",
+                "status":402
+            }, status=402)
+        except Exception as e:
+            print(f"Error: {e}")
+            return JsonResponse({
+                "message":f"Error: {e}",
+                "status":500
+            }, status=500)
 
     else:
         return JsonResponse({

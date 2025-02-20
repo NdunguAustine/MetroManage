@@ -61,7 +61,7 @@ class RouteChangeRequest(models.Model):
     ]
 
     driver = models.ForeignKey(DriverConductor, on_delete=models.CASCADE, related_name= "route_change") 
-    current_route = models.CharField(max_length=100)
+    # current_route = models.CharField(max_length=100)
     requested_route = models.CharField(max_length=100)
     reason = models.TextField()
     status = models.CharField(max_length=10, choices=STATUS_CHOICES, default='Pending')
