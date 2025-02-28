@@ -1,6 +1,6 @@
 function confirmLogout() {
     // Redirect to Django logout URL
-    window.location.href = "/user/landing";
+    window.location.href = "/user/ConfirmLogout";
 }
 
 function cancelLogout() {

@@ -7,6 +7,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Login - MetroManage</title>
     <link rel="stylesheet" href="{% static 'CSS/login.css' %}">
+    <script src="https://kit.fontawesome.com/2e5a9c41cc.js" crossorigin="anonymous"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+
 </head>
 <body>
     <div class="login-container">
@@ -25,7 +28,7 @@
                 <option value="user">User</option>
             </select>
 
-            <button type="submit">Login</button>
+            <button type="submit"  id="login-btn">Login</button>
             <span id="loadingIndicator" style="display:none;">Loading...</span>
             <p id="error-message" class="error-message"></p>
         </form>

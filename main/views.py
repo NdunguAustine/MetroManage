@@ -1,6 +1,6 @@
 from django.shortcuts import render, redirect
 from django.contrib.auth.models import User
-from auth0.utils import is_admin, create_user
+from auth0.utils import is_admin, create_user, is_driver
 from django.http import JsonResponse, HttpResponseForbidden, HttpResponse
 from django.contrib.auth.decorators import login_required
 from .models import DriverConductor
@@ -12,8 +12,11 @@ from .forms import DriverConductorForm
 import json
 from . import database
 from django.db import IntegrityError
+from auth0.views import logout_view
+from . import utils
 
 # Create your views here.
+@login_required(login_url='/user/login')
 def index(request):
     user = request.user
     try:
@@ -28,7 +31,8 @@ def index(request):
                         "drivers": drivers.count(), 
                         "buses": buses.count(), 
                         "routes": routes.count(), 
-                        "payments": payments.count()
+                        "payments": payments.count(),
+                        "user": user
                         })  
                 return render(request,"main/index.html", {})
             else:
@@ -41,6 +45,10 @@ def index(request):
 
 @login_required(login_url='/user/login')
 def admin_bus_view(request):
+    user_admin, res = utils.check_if_admin(request.user)
+    if not user_admin:
+        return res
+    
     try:
         if request.method == "GET":
             buses = []
@@ -60,7 +68,11 @@ def admin_bus_view(request):
 @login_required(login_url='/user/login')
 def admin_driver_view(request):
     user = request.user
-    if user.is_authenticated and is_admin(user):
+    user_admin, res = utils.check_if_admin(user)
+    if not user_admin:
+        return res
+    
+    if user.is_authenticated:
         if request.method == "GET":
             drivers = DriverConductor.objects.all()
 
@@ -132,14 +144,22 @@ def admin_driver_view(request):
             "status": 401
         }, status=401)
 
-
 def create_group(group_name):
     return Group.objects.get_or_create(name=group_name)
- 
+
+@login_required(login_url='/user/login')
 def admin_report_view(request):
+    user_admin, res = utils.check_if_admin(request.user)
+    if not user_admin:
+        return res
     return render(request,"main/Admin-Reports.html", {})
 
+@login_required(login_url='/user/login')
 def admin_route_view(request):
+
+    user_admin, res = utils.check_if_admin(request.user)
+    if not user_admin:
+        return res
     if request.method == "GET":
         return render(request,"main/Admin-Route.html", {})
 
@@ -186,26 +206,54 @@ def admin_route_view(request):
                 "status":500
             }, status=500)
 
+@login_required(login_url='/user/login')
 def admin_payment_view(request):
+    user_admin, res = utils.check_if_admin(request.user)
+    if not user_admin:
+        return res
     return render(request,"main/AdminPayments.html", {})
 
+@login_required(login_url='/user/login')
 def user_activity_view(request):
+    user = request.user
+    user_is_driver = is_driver(user)
+    if not user_is_driver:
+        return HttpResponseForbidden("Not allowed to access this services")
     return render(request,"main/User-Activity.html", {})
 
 def user_alerts_view(request):
     return render(request,"main/User-Alerts.html", {})
 
+@login_required(login_url='/user/login')
 def user_payments_view(request):
+    user = request.user
+    user_is_driver = is_driver(user)
+
+    if not user_is_driver:
+        return HttpResponseForbidden("Not allowed to access this services")
+    
     return render(request,"main/User-Payment.html", {})
 
+@login_required(login_url='/user/login')
 def user_profile_view(request):
+    user = request.user
+    user_is_driver = is_driver(user)
+    if not user_is_driver:
+        return HttpResponseForbidden("Not allowed to access this services")
+    
     return render(request,"main/User-Profile.html", {})
 
 @login_required(login_url='/user/login')
 def user_route_view(request):
     user = request.user
+    user_is_driver = is_driver(user)
+
+    if not user_is_driver:
+        return HttpResponseForbidden("Not allowed to access this services")
+    
     if request.method == "POST":
         try:
+            print(f"Data: {request.POST}")
             route = request.POST.get("newRoute", None)
             reason = request.POST.get("reason", None)
 
@@ -213,7 +261,7 @@ def user_route_view(request):
 
             if not all([route, reason]):
                 return JsonResponse({
-                    "message":"All fields required.",
+                    "message":"All route fields required.",
                     "status":400
                 }, status=400)
             
@@ -238,12 +286,31 @@ def user_route_view(request):
                 "status":500
             }, status=500)
     else:
-        return render(request,"main/User-Route.html", {})
+        pending_requests = []
+        try:
+            driver = DriverConductor.objects.filter(profile=user).first()
+
+            if driver:
+                route_requests = RouteChangeRequest.objects.filter(driver=driver, status="Pending").all()
+
+                if route_requests.exists():
+                    for route_request in route_requests:
+                        pending_requests.append({
+                            "route": route_request.requested_route,
+                            "reason": route_request.reason,
+                            "status": route_request.status
+                        })
+
+        except Exception as e:
+            print(f"Error: {e}")
+        print(f"Pending request: {pending_requests}")
+        return render(request,"main/User-Route.html", {"pending_requests":pending_requests})
 
 @login_required(login_url='/user/login')
 def user_dashboard_view(request):
     user = request.user
-    if user.is_authenticated:
+    user_is_driver = is_driver(user)
+    if user.is_authenticated and user_is_driver:
         try:
             driver_bus = "Not assigned"
             bus_router = "Not assigned"
@@ -267,15 +334,24 @@ def user_dashboard_view(request):
                 "status":500
             }, status=500)
     else:
-        return redirect("/user/login")
+        return HttpResponseForbidden("Not allowed to access this services")
         
 def user_login_view(request):
     return render(request, "main/login.html", {})
 
+@login_required(login_url='/user/login')
 def admin_addDriver_view(request):
+    user_admin, res = utils.check_if_admin(request.user)
+    if not user_admin:
+        return res
     return render(request,"main/Admin-add-driver.html", {})
 
+@login_required(login_url='/user/login')
 def admin_addBus_view(request):
+    user_admin, res = utils.check_if_admin(request.user)
+    if not user_admin:
+        return res
+    
     if request.method == "GET":
         routes = []
         drivers = []
@@ -351,11 +427,18 @@ def admin_addBus_view(request):
 def user_landing_view(request):
     return render(request,"main/Landing.html", {})
 
+@login_required(login_url='/user/login')
 def user_logout_view(request):
     return render(request, "main/logout.html", {})
 
+
+@login_required(login_url='/user/login')
 def user_ConfirmLogout_view(request):
-    return render(request, "main/landing.html", {})
+    is_success = logout_view(request)
+    if is_success:
+        return render(request, "main/landing.html", {})
+    else:
+        HttpResponse("Something went wrong")
 
 @login_required(login_url='/user/login')
 def user_profile_page_view(request):
@@ -370,7 +453,6 @@ def user_profile_page_view(request):
             return HttpResponse(response["message"])
     except Exception as e:
         return HttpResponse(f"Something went wrong: {str(e)}")
-    
 
 @login_required(login_url='/user/login')
 def user_edit_profile_view(request):

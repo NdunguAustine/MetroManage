@@ -1,56 +1,56 @@
-document.getElementById('routeUpdateForm').addEventListener('submit', function (e) {
-  e.preventDefault();
+$(document).ready(function() {
 
-  const newRoute = document.getElementById('newRoute').value.trim();
-  const reason = document.getElementById('reason').value.trim();
-  console.log(newRoute, reason);
+    $('#routeUpdateForm').submit(function(event) {
+        event.preventDefault();
 
-  if (!newRoute || !reason) {
-      alert("Please fill in all fields.");
-      return;
-  }
-  const formData = new FormData(this);
+        const newRoute = document.getElementById('newRoute').value.trim();
+        const reason = document.getElementById('reason').value.trim();
+        console.log(newRoute, reason);
 
-  fetch("/user/routes",{
-      method:"POST",
-      body:formData,
-      headers:{
-          "Content-Type":"application/json",
-          "X-CSRFToken": $("input[name='csrfmiddlewaretoken']").val(),
-      },
-  })
-  .then(response=>response.json())
-  .then(data=>{
-    const message = data.message;
-    const status = data.status;
-      if(data.status===200){
-          alert("Request submitted successfully!");
-      }else{
-          alert(message);
-      }
-  });
-  // Create request data
-  const requestData = {
-      route: newRoute,
-      reason: reason,
-      status: "Pending"
-  };
+        if (!newRoute || !reason) {
+            alert("Please fill in all fields.");
+            return;
+        }
+        const formData = new FormData(this);
+    
 
-  // Add to pending requests table
-  addPendingRequest(requestData);
+        fetch("/user/routes",{
+            method: "POST",
+            body: formData,
+            headers:{
+                "X-CSRFToken": $("input[name='csrfmiddlewaretoken']").val(),
+            },
+        })
+        .then(response=>response.json())
+        .then(data=>{
+            const message = data.message;
+            const status = data.status;
+            if(data.status===200){
+                alert("Request submitted successfully!");
+                
+                const requestData = {
+                    route: newRoute,
+                    reason: reason,
+                    status: "Pending"
+                };
+                addPendingRequest(requestData);
 
-  // Clear form
+            }else{
+                alert(message);
+            }
+        });
+    });
+
+        function addPendingRequest(request) {
+            const tableBody = document.getElementById('pendingRequests');
+            const row = document.createElement('tr');
+
+            row.innerHTML = `
+                <td>${request.route}</td>
+                <td>${request.reason}</td>
+                <td>${request.status}</td>
+            `;
+
+            tableBody.appendChild(row);
+        }
 });
-
-function addPendingRequest(request) {
-  const tableBody = document.getElementById('pendingRequests');
-  const row = document.createElement('tr');
-
-  row.innerHTML = `
-      <td>${request.route}</td>
-      <td>${request.reason}</td>
-      <td>${request.status}</td>
-  `;
-
-  tableBody.appendChild(row);
-}

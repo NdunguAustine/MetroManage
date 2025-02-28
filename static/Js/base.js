@@ -30,7 +30,3 @@ window.onclick = function(event) {
     }
 };
 
-// Dynamically set the logged-in user’s name (Replace with actual user data)
-document.addEventListener("DOMContentLoaded", function () {
-    document.getElementById("userName").innerText = "John Doe"; // Fetch from backend dynamically
-});

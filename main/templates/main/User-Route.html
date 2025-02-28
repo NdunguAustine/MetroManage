@@ -39,6 +39,13 @@
               </tr>
           </thead>
           <tbody id="pendingRequests">
+            {% for request in pending_requests %}
+                <tr>
+                    <td>{{ request.route }}</td>
+                    <td>{{ request.reason }}</td>
+                    <td>{{ request.status }}</td>
+                </tr>
+            {% endfor %}
               <!-- Requests will be populated dynamically -->
           </tbody>
       </table>

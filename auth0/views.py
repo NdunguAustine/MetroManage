@@ -1,8 +1,9 @@
 from django.shortcuts import render
 from django.http import JsonResponse
 from django.contrib.auth.models import User
-from django.contrib.auth import login, authenticate
+from django.contrib.auth import login, authenticate, logout
 import logging
+from .utils import is_driver, is_admin
 
 # Create your views here.
 
@@ -25,9 +26,15 @@ def login_view(request):
             user = authenticate(request, username=email, password=password)
             if user:
                 login(request, user)
+                user_is_driver = is_driver(user)
+                user_is_admin = is_admin(user)
+
+                redirect_url  = "/" if user_is_admin else "/user/dashboard"
+
                 return JsonResponse({
                     "message": "Login successful. Redirecting...",
-                    "status": 200
+                    "status": 200,
+                    "redirect_url": redirect_url
                 }, status=200)
             else:
                 return JsonResponse({
@@ -47,3 +54,9 @@ def login_view(request):
         "status": 405
     }, status=405)
 
+def logout_view(request):
+    try:
+        logout(request)
+        return True
+    except Exception as e:
+        return False

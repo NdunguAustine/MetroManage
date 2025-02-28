@@ -69,4 +69,4 @@ class RouteChangeRequest(models.Model):
     updated_at = models.DateTimeField(auto_now=True)
 
     def __str__(self):
-        return f"{self.driver.username} - {self.requested_route} ({self.status})"
+        return f"{self.driver.first_name} {self.driver.last_name} - ({self.requested_route})"
