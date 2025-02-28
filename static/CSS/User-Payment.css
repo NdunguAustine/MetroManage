@@ -1,114 +1,67 @@
+.container {
+  width: 60%;
+  margin: 0 auto;
+  background: #f8f9fa;
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+}
 
-  /* Container */
-  .payment-management-container {
-    max-width: 1200px;
-    margin: 30px auto;
-    padding: 20px;
-    background: #fff;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    border-radius: 8px;
-  }
-  
-  /* Heading */
-  .payment-management-container h1 {
-    text-align: center;
-    margin-bottom: 20px;
-    font-size: 1.8rem;
-    color: #4CAF50;
-  }
-  
-  /* Table Styling */
-  #payment-table {
-    width: 100%;
-    border-collapse: collapse;
-    margin-top: 20px;
-    background-color: #ffffff;
-    font-size: 1rem;
-    color: #333;
-  }
-  
-  #payment-table th {
-    background-color: #4CAF50;
-    color: white;
-    text-align: left;
-    padding: 10px 15px;
-    text-transform: uppercase;
-    border-bottom: 2px solid #ddd;
-  }
-  
-  #payment-table td {
-    padding: 10px 15px;
-    border-bottom: 1px solid #ddd;
-    text-align: left;
-  }
-  
-  #payment-table tbody tr:nth-child(even) {
-    background-color: #f9f9f9;
-  }
-  
-  #payment-table tbody tr:hover {
-    background-color: #f1f1f1;
-    cursor: pointer;
-  }
-  
-  /* Payment Form */
-  .payment-form-container {
-    margin-top: 30px;
-  }
-  
-  .payment-form-container h2 {
-    color: #4CAF50;
-    font-size: 1.5rem;
-    margin-bottom: 15px;
-  }
-  
-  #payment-form {
-    display: flex;
-    flex-direction: column;
-    gap: 15px;
-  }
-  
-  #payment-form label {
-    font-weight: bold;
-    margin-bottom: 5px;
-  }
-  
-  #payment-form input, 
-  #payment-form select, 
-  #payment-form button {
-    padding: 10px;
-    font-size: 1rem;
-    border: 1px solid #ccc;
-    border-radius: 5px;
-  }
-  
-  #payment-form button {
-    background-color: #4CAF50;
-    color: white;
-    border: none;
-    cursor: pointer;
-    text-transform: uppercase;
-  }
-  
-  #payment-form button:hover {
-    background-color: #45a049;
-  }
-  
-  /* Responsive Design */
-  @media (max-width: 768px) {
-    #payment-table {
-      font-size: 0.9rem;
-    }
-  
-    #payment-table th, 
-    #payment-table td {
-      padding: 8px 10px;
-    }
-  
-    #payment-form input, 
-    #payment-form select, 
-    #payment-form button {
-      font-size: 0.9rem;
-    }
-  }
-  
+h2 {
+  text-align: center;
+  color: #004AAD; /* SACCO Theme Color */
+}
+
+.balance-info {
+  background: #004AAD;
+  color: white;
+  padding: 10px;
+  text-align: center;
+  border-radius: 5px;
+  margin-bottom: 20px;
+}
+
+form {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+input, select, button {
+  padding: 10px;
+  border-radius: 5px;
+  border: 1px solid #ccc;
+  font-size: 16px;
+}
+
+button {
+  background: #004AAD;
+  color: white;
+  cursor: pointer;
+  font-weight: bold;
+}
+
+button:hover {
+  background: #002d6b;
+}
+
+table {
+  width: 100%;
+  margin-top: 20px;
+  border-collapse: collapse;
+}
+
+th, td {
+  padding: 10px;
+  text-align: left;
+  border-bottom: 1px solid #ddd;
+}
+
+th {
+  background: #004AAD;
+  color: white;
+}
+
+tr:hover {
+  background: #f1f1f1;
+}

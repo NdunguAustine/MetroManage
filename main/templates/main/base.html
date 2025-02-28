@@ -25,7 +25,22 @@
                 <span class="material-icons-outlined">search</span>
             </div>
             <div class="header-right">
-                <span class="material-icons-outlined">account_circle</span>
+                <div class="profile-menu">
+                    <span class="material-icons-outlined profile-icon" onclick="toggleDropdown()">account_circle</span>
+                    <div class="dropdown-menu" id="profileDropdown">
+                        <div class="dropdown-item">
+                            <span class="material-icons-outlined">person</span>
+                            <span id="userName">John Doe</span>
+                        </div>
+                        <hr>
+                        <a href="/user/ProfilePage" class="dropdown-item">
+                            <span class="material-icons-outlined">account_box</span> Profile
+                        </a>
+                        <a href="/user/Logout" class="dropdown-item">
+                            <span class="material-icons-outlined">logout</span> Sign Out
+                        </a>
+                    </div>
+                </div>
             </div>
         </header>
         <aside id="sidebar">

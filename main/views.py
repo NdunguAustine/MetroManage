@@ -250,8 +250,10 @@ def user_dashboard_view(request):
             driver = DriverConductor.objects.filter(profile=user).first()
             if driver:
                 bus = BusDetails.objects.filter(driver=driver).first()
-                driver_bus = bus.fleetNumber
+                
                 if bus:
+                    driver_bus = bus.fleetNumber
+
                     bus_router = bus.route.routeName
                 
             return render(request, "main/User-Dashboard.html", {
@@ -349,6 +351,12 @@ def admin_addBus_view(request):
 def user_landing_view(request):
     return render(request,"main/Landing.html", {})
 
+def user_logout_view(request):
+    return render(request, "main/logout.html", {})
+
+def user_ConfirmLogout_view(request):
+    return render(request, "main/landing.html", {})
+
 @login_required(login_url='/user/login')
 def user_profile_page_view(request):
     user = request.user
@@ -408,3 +416,4 @@ def user_edit_profile_view(request):
     except Exception as e:
         print(f"Error: {e}")
         return HttpResponse(f"Something went wrong: {str(e)}")
+

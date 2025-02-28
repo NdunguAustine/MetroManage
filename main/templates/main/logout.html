@@ -1,0 +1,28 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Logout - MetroManage</title>
+    <link rel="stylesheet" href="{% static 'CSS/logout.css' %}">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons+Outlined" rel="stylesheet">
+</head>
+<body>
+
+<div class="logout-container">
+    <div class="logout-box">
+        <span class="material-icons-outlined logout-icon">logout</span>
+        <h2>Are you sure you want to log out?</h2>
+        <p>Logging out will end your current session, and you will need to log in again to access your account.</p>
+
+        <div class="logout-buttons">
+            <button class="cancel-btn" onclick="cancelLogout()">Cancel</button>
+            <button class="logout-btn" onclick="confirmLogout()">Log Out</button>
+        </div>
+    </div>
+</div>
+
+<script src="{% static 'Js/logout.js' %}"></script>
+</body>
+</html>

@@ -19,7 +19,10 @@ urlpatterns = [
     path("admin/addBus", view=views.admin_addBus_view, name="admin_addBus_view"),
     path("user/landing", view=views.user_landing_view, name="user_landing_view"),
     path("user/ProfilePage", view=views.user_profile_page_view, name="user_profile_page_view"),
-    path("user/EditProfile", view=views.user_edit_profile_view, name="user_edit_profile_view")
+    path("user/EditProfile", view=views.user_edit_profile_view, name="user_edit_profile_view"),
+    path("user/Logout", view=views.user_logout_view, name="user_logout_view"),
+    path("user/ConfirmLogout", view=views.user_ConfirmLogout_view, name="user_ConfirmLogout_view"),
+    
 
 ]
 

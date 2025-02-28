@@ -60,7 +60,7 @@ nav ul li a {
     display: flex;
     align-items: center;
     justify-content: center;
-    background: url('super-metro-bg.jpg') no-repeat center center/cover;
+    background: url('/main/Images/metrolanding.jpg') no-repeat center center/cover;
     color: white;
     text-align: center;
 }

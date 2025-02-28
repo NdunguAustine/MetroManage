@@ -1,0 +1,75 @@
+/* Corporate Styling for Logout Page */
+body {
+    font-family: 'Arial', sans-serif;
+    background: linear-gradient(to right, #007bff, #0056b3);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    margin: 0;
+}
+
+.logout-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+}
+
+.logout-box {
+    background: white;
+    padding: 30px;
+    border-radius: 8px;
+    box-shadow: 0px 5px 15px rgba(0, 0, 0, 0.2);
+    text-align: center;
+    width: 400px;
+}
+
+.logout-icon {
+    font-size: 50px;
+    color: #d9534f;
+    margin-bottom: 15px;
+}
+
+h2 {
+    font-size: 22px;
+    color: #333;
+}
+
+p {
+    font-size: 14px;
+    color: #666;
+    margin-bottom: 20px;
+}
+
+.logout-buttons {
+    display: flex;
+    justify-content: space-between;
+}
+
+button {
+    padding: 10px 20px;
+    font-size: 16px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    width: 48%;
+}
+
+.cancel-btn {
+    background: #6c757d;
+    color: white;
+}
+
+.cancel-btn:hover {
+    background: #5a6268;
+}
+
+.logout-btn {
+    background: #d9534f;
+    color: white;
+}
+
+.logout-btn:hover {
+    background: #c9302c;
+}
