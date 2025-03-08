@@ -13,12 +13,6 @@ h2, h3 {
   color: #007bff;
 }
 
-.route-info {
-  background: #e3f2fd;
-  padding: 10px;
-  border-radius: 5px;
-  margin-bottom: 20px;
-}
 
 .update-section, .pending-section {
   margin-top: 20px;

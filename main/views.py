@@ -213,6 +213,9 @@ def admin_payment_view(request):
         return res
     return render(request,"main/AdminPayments.html", {})
 
+
+
+
 @login_required(login_url='/user/login')
 def user_activity_view(request):
     user = request.user

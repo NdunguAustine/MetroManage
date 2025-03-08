@@ -4,14 +4,13 @@
 {% block title %}Bus Management{% endblock %}
 
 {% block content %}
-<link rel="stylesheet" href="{% static 'CSS/Admin-add-bus.css' %}">
+<link rel="stylesheet" href="{% static 'CSS/Admin-Bus.css' %}">
 <div class="container">
     <h2>Bus Management</h2>
     <button id="addBusBtn" onclick="location.href='/admin/addBus'">Add Bus</button>
     <table>
         <thead>
             <tr>
-                <th>Bus ID</th>
                 <th>Route</th>
                 <th>Fleet Number</th>
                 <th>Number plate</th>
@@ -22,7 +21,6 @@
             <!-- Data populated dynamically -->
              {% for bus in buses %}
             <tr>
-                <td>{{ bus.bus_id }}</td>
                 <td>{{ bus.route.route_name }}</td>
                 <td>{{ bus.fleet_number }}</td>
                 <td>{{ bus.license_plate }}</td>
@@ -36,5 +34,5 @@
         <button id="nextPage">Next</button>
     </div>
 </div>
-<script src="{% static 'Js/bus_management.js' %}"></script>
+<script src="{% static 'Js/Admin-Bus.js' %}"></script>
 {% endblock %}

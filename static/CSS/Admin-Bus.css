@@ -31,27 +31,58 @@ h2 {
 .add-bus-btn:hover {
   background: #0056b3;
 }
-
+/* Corporate Styling for Table */
 table {
-  width: 100%;
-  border-collapse: collapse;
-  margin-top: 20px;
+    width: 100%;
+    border-collapse: collapse;
+    margin: 20px 0;
+    font-size: 16px;
+    font-family: 'Arial', sans-serif;
+    border-radius: 8px;
+    overflow: hidden;
+    box-shadow: 0px 5px 15px rgba(0, 0, 0, 0.1);
+    background: #002b5c; /* Dark background */
+}
+
+/* Table Header */
+thead {
+    background: #004080; /* Dark blue */
+    color: white;
+    text-align: left;
 }
 
 th, td {
-  padding: 10px;
-  border: 1px solid #ddd;
-  text-align: center;
+    padding: 12px 15px;
+    border-bottom: 1px solid #1a4d80; /* Darker border */
+    color: #e0e0e0; /* Light text for readability */
 }
 
-th {
-  background-color: #007bff;
-  color: white;
+/* Alternate Row Colors */
+tbody tr:nth-child(odd) {
+    background: #003366; /* Deep blue */
 }
 
-tr:nth-child(even) {
-  background-color: #f2f2f2;
+tbody tr:nth-child(even) {
+    background: #002b5c; /* Slightly darker blue */
 }
+
+/* Table Row Hover Effect */
+tbody tr:hover {
+    background: #0056b3; /* Brighter blue for hover */
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    table {
+        font-size: 14px;
+    }
+
+    th, td {
+        padding: 10px;
+    }
+}
+
+
 
 .pagination {
   display: flex;
