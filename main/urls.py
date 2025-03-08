@@ -21,6 +21,7 @@ urlpatterns = [
     path("user/ProfilePage", view=views.user_profile_page_view, name="user_profile_page_view"),
     path("user/EditProfile", view=views.user_edit_profile_view, name="user_edit_profile_view"),
     path("user/Logout", view=views.user_logout_view, name="user_logout_view"),
-    path("user/ConfirmLogout", view=views.user_ConfirmLogout_view, name="user_ConfirmLogout_view")
+    path("user/ConfirmLogout", view=views.user_ConfirmLogout_view, name="user_ConfirmLogout_view"),
+    path("route/<route_id>", view=views.route_view, name="route_view")
 ]
 

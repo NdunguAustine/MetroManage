@@ -7,14 +7,12 @@ $(document).ready(function () {
         const name = document.getElementById('route-name').value;
         
         const formData = new FormData(this);
-        $('#modal-loading').modal('show');
 
         fetch("/admin/routes", {
             method: "POST",
             body: formData
         })
         .then(response => {
-            $('#modal-loading').modal('hide');
             
             if (!response.ok) {
                 if(response.status == 402){
@@ -30,19 +28,18 @@ $(document).ready(function () {
             const message = data.message;
             const status = data.status;
             
-        
+            window.location.reload()
             this.reset();
 
             // Update the table dynamically
             addOrUpdateRoute(data.route_id, start, end, name);
         })
         .catch(error => {
-            $('#modal-loading').modal('hide');
             console.error("Error:", error)
         }).finally(() => {
-            setTimeout(function(){
-                $('#modal-loading').modal('hide');
-            }, 1000);
+            // setTimeout(function(){
+            //     $('#modal-loading').modal('hide');
+            // }, 1000);
         });
     });
 

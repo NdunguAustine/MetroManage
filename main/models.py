@@ -32,14 +32,14 @@ class  BusDetails(models.Model):
     busID= models.CharField(max_length=50, unique=True, blank=False, null=False)
     fleetNumber= models.CharField(max_length=20, blank=False, null=False, unique=True)
     numberPlate= models.CharField(max_length=20, blank=False, null=False, unique=True)
-    driver= models.ForeignKey(DriverConductor, on_delete=models.CASCADE, related_name="bus_driver", blank=True, null=True)
-    route = models.ForeignKey(RouteDetails, on_delete=models.CASCADE, related_name="bus_route", null=True, blank=True)
+    driver= models.ForeignKey(DriverConductor, on_delete=models.SET_NULL, related_name="bus_driver", blank=True, null=True)
+    route = models.ForeignKey(RouteDetails, on_delete=models.SET_NULL, related_name="bus_route", null=True, blank=True)
 
     def __str__(self):
         return self.numberPlate
 class PaymentDetails(models.Model):
     paymentID= models.CharField(max_length=50, unique=True, blank=False, null=False)
-    bus= models.ForeignKey(BusDetails, on_delete=models.CASCADE, related_name="bus_payment", blank=False, null=False)
+    bus= models.ForeignKey(BusDetails, on_delete=models.SET_NULL, related_name="bus_payment", blank=True, null=True)
     amount= models.CharField(max_length=50, blank=False, null=False)
     referenceCode= models.CharField(max_length=50, blank=False, null=False)
 

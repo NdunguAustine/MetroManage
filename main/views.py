@@ -16,6 +16,33 @@ from auth0.views import logout_view
 from . import utils
 
 # Create your views here.
+def route_view(request, route_id):
+    if route_id is None or route_id == "":
+        return JsonResponse({"message": "Missing data", "status":400}, status=400)
+
+    if request.method == "GET":
+        action = request.GET.get("action", None)
+
+        if action is None:
+            return JsonResponse({"message": "I dont know what to do.", "status": 400}, status=400)
+        try:
+            route = RouteDetails.objects.filter(routeID=route_id).first()
+
+            if route is None:
+                return JsonResponse({"message":"Route does not exist", "status": 404}, status=404)
+            
+            if action == "delete":
+                route.delete()
+                return JsonResponse({"message":"Success", "status":200}, status=200)
+            else:
+                return JsonResponse({"message": "Not allowed", "status": 400}, status=400)
+
+        except Exception as e:
+            print(f"Error: {e}")
+            return JsonResponse({"message": f"Error: {e}", "status":500}, status=500)
+        
+    return JsonResponse({"message": "Method not allowed", "status": 410}, status=410)
+    
 @login_required(login_url='/user/login')
 def index(request):
     user = request.user
@@ -54,12 +81,12 @@ def admin_bus_view(request):
             buses = []
             for bus in BusDetails.objects.all():
                 buses.append({
-                    "bus_id": bus.busID,
                     "fleet_number": bus.fleetNumber,
-                    "licence_plate": bus.numberPlate,
+                    "license_plate": bus.numberPlate,
                     "route_name": bus.route.routeName if bus.route else "Not assigned",
                     "driver_name": f"{bus.driver.first_name} {bus.driver.last_name}"
-                })          
+                })
+            print(f"Buses: {buses}")          
             return render(request,"main/Admin-Bus.html", {"buses":buses})
     except Exception as e:
         print(f"Error: {e}")
@@ -160,8 +187,27 @@ def admin_route_view(request):
     user_admin, res = utils.check_if_admin(request.user)
     if not user_admin:
         return res
+    
     if request.method == "GET":
-        return render(request,"main/Admin-Route.html", {})
+        # get all routes
+        routes = []
+
+        try:
+            list_routes = RouteDetails.objects.all()
+
+            routes = [
+                {
+                    "route_id": route.routeID,
+                    "route_name": route.routeName,
+                    "route_start": route.startRoute,
+                    "route_destn": route.destination
+                } for route in list_routes
+            ] if list_routes.exists() else []
+                
+        except Exception as e:
+            print(f"Error: {e}")
+
+        return render(request,"main/Admin-Route.html", {"routes": routes})
 
     elif request.method == "POST":
         name = request.POST.get("route-name", None)

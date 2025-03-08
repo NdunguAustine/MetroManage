@@ -21,10 +21,10 @@
             <!-- Data populated dynamically -->
              {% for bus in buses %}
             <tr>
-                <td>{{ bus.route.route_name }}</td>
+                <td>{{ bus.route_name }}</td>
                 <td>{{ bus.fleet_number }}</td>
                 <td>{{ bus.license_plate }}</td>
-                <td>{{ bus.driver.driver_name }}</td>
+                <td>{{ bus.driver_name }}</td>
             </tr>
              {% endfor %}
         </tbody>
