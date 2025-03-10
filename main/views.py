@@ -280,8 +280,10 @@ def user_payments_view(request):
 
     if not user_is_driver:
         return HttpResponseForbidden("Not allowed to access this services")
+
+    payment_balance = 5000
     
-    return render(request,"main/User-Payment.html", {})
+    return render(request,"main/User-Payment.html", {"payment_balance":payment_balance})
 
 @login_required(login_url='/user/login')
 def user_profile_view(request):
@@ -369,8 +371,8 @@ def user_dashboard_view(request):
                 
                 if bus:
                     driver_bus = bus.fleetNumber
-
-                    bus_router = bus.route.routeName
+                    if bus.route:
+                        bus_router = bus.route.routeName
                 
             return render(request, "main/User-Dashboard.html", {
                 "driver": driver,

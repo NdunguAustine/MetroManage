@@ -14,9 +14,8 @@ def login_view(request):
     if request.method == "POST":
         email = request.POST.get("email")
         password = request.POST.get("password")
-        role = request.POST.get("role")
 
-        if not all([email, password, role]):
+        if not all([email, password]):
             return JsonResponse({
                 "message": "All fields are required. Please fill out the form completely.",
                 "status": 400

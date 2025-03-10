@@ -3,7 +3,6 @@ document.getElementById("login-form").addEventListener("submit", async function(
 
     const email = document.getElementById("email").value;
     const password = document.getElementById("password").value;
-    const role = document.getElementById("role").value;
 
     const login_btn = $("#login-btn");
     const spinner_html = `<i class="fa-solid fa-spinner fa-spin" style="color: #ff5900;"></i>`;
@@ -28,34 +27,5 @@ document.getElementById("login-form").addEventListener("submit", async function(
     }).finally(()=>{
         login_btn.html("Login");
         login_btn.attr("disabled", false);
-    });
-});
-
-document.getElementById("loginForm").addEventListener("submit", function(event) {
-    event.preventDefault();
-    
-    let loginButton = document.getElementById("loginButton");
-    let loadingIndicator = document.getElementById("loadingIndicator");
-
-    loginButton.disabled = true;
-    loadingIndicator.style.display = "inline-block";
-
-    let formData = new FormData(this);
-
-    fetch("/login/", {
-        method: "POST",
-        body: formData
-    })
-    .then(response => response.json())
-    .then(data => {
-        alert(data.message);  // Display message to user
-        if (data.status === 200) {
-            window.location.href = "/dashboard/";  // Redirect on success
-        }
-    })
-    .catch(error => console.error("Error:", error))
-    .finally(() => {
-        loginButton.disabled = false;
-        loadingIndicator.style.display = "none";
     });
 });
